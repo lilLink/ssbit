@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Company>
+    <nameCompany>SoftServe</nameCompany>
+    <personList>
+        <personList>
+            <firstName>Vadym</firstName>
+            <lastName>Ptitsyn</lastName>
+            <birthDate>2000-08-07</birthDate>
+            <address>
+                <country>Ukraine</country>
+                <city>Chernivtsi</city>
+                <street>afg</street>
+                <appartmentString>ag</appartmentString>
+            </address>
+        </personList>
+    </personList>
+</Company>

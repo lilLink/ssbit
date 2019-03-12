@@ -1,0 +1,10 @@
+!!com.lillink.parsefourtype.model.Company
+nameCompany: SoftServe
+personList:
+- address: {appartmentString: ag, city: Chernivtsi, country: Ukraine, id: null, street: afg}
+  birthDate: '2000-08-07'
+  contacts: []
+  firstName: Vadym
+  jobs: []
+  lastName: Ptitsyn
+  skills: null
