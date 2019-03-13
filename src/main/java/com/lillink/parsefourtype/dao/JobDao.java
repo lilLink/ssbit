@@ -79,6 +79,11 @@ public class JobDao extends Dao implements BaseDao<Job>{
 
     @Override
     public void delete(Long id) {
+        PreparedStatement statement = null;
+        try {
 
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
