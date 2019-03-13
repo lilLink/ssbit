@@ -42,7 +42,6 @@ public class YamlCompanyTest {
         address.setCountry("Ukraine");
         address.setCity("Chernivtsi");
         address.setStreet("afg");
-        address.setAppartmentString("ag");
         person.setAddress(address);
 
         personList.add(person);

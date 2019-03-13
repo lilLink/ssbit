@@ -2,6 +2,7 @@ package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Person;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,10 +14,28 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
     public static final String FIND_ALL_QUERRY = "select * from person";
     public static final String UPDATE_ALL_QUERRY = "update person set first_name = ?, last_name = ?, birth_date = ?, skills = ?";
+    public static final String INSERT_ALL_QUERRY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
+    public static final String FIND_BY_ID_QUERRY = "SELECT * FROM person WHERE id = ?";
 
     @Override
     public Person findById(Long id){
-
+        Person person = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERRY);
+            statement.setObject(1,id);
+            ResultSet set = statement.executeQuery();
+            if (set.first()){
+                person = new Person();
+                person.setId(id);
+                person.setFirstName(set.getString("first_name"));
+                person.setLastName(set.getString("last_name"));
+                person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
+                person.setSkills(set.getString("skills"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return person;
     }
 
     @Override
@@ -44,7 +63,6 @@ public class PersonDao extends Dao implements BaseDao<Person> {
         return resultList;
     }
 
-    @Override
     public Person update(Person person) {
 
         List<Person> resultList = new ArrayList<>();
@@ -72,8 +90,19 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     }
 
     @Override
-    public Person save(Person person) {
-        return null;
+    public void save(Person person) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT_ALL_QUERRY);
+
+            statement.setString(1, person.getFirstName());
+            statement.setString(2,person.getLastName());
+            statement.setString(3,person.getBirthDate());
+            statement.setString(4,person.getSkills());
+
+            statement.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
 
     @Override
     public Address findById(Long id){
-
+        return null;
     }
 
     @Override
@@ -42,32 +42,21 @@ public class AddressDao extends Dao implements BaseDao<Address> {
         return resultList;
     }
 
-    @Override
-    public Address update(Address address) {
-        List<Address> resultList = new ArrayList<>();
+    public void update(Address address) {
 
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(UPDATE_ALL_QUERRY);
 
-            String country = set.getString("country");
-            String city = set.getString("city");
-            String street = set.getString("street");
 
-            address.setCountry(country);
-            address.setCity(city);
-            address.setStreet(street);
-
-            resultList.add(address);
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override
-    public Address save(Address address) {
-        return null;
+    public void save(Address address) {
+
     }
 
     @Override

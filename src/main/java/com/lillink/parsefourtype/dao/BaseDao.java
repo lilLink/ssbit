@@ -8,9 +8,7 @@ public interface BaseDao<T> {
 
     List<T> findAll();
 
-    T update(T job);
-
-    T save(T job);
+    void save(T job);
 
     void delete(Long id);
 }

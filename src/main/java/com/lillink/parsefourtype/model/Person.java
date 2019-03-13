@@ -12,6 +12,8 @@ import java.util.List;
 public class Person {
 
     @XmlElement
+    private Long id;
+    @XmlElement
     private String firstName;
     @XmlElement
     private String lastName;
@@ -89,12 +91,21 @@ public class Person {
         this.contacts = contacts;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Person(){}
 
     @Override
     public String toString() {
         return "Person{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
                 ", jobs=" + jobs +
@@ -103,5 +114,4 @@ public class Person {
                 ", skills='" + skills + '\'' +
                 '}';
     }
-
 }

@@ -25,7 +25,6 @@ public class XmlCompanyTest {
         address.setCountry("Ukraine");
         address.setCity("Chernivtsi");
         address.setStreet("afg");
-        address.setAppartmentString("ag");
         person.setAddress(address);
 
         List<Job> jobList = new ArrayList<>();

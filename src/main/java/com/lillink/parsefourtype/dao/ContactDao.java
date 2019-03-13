@@ -5,7 +5,6 @@ import com.lillink.parsefourtype.model.Contact;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
 
     @Override
     public Contact findById(Long id){
-
+        return null;
     }
 
     @Override
@@ -41,7 +40,6 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
         return resultList;
     }
 
-    @Override
     public Contact update(Contact contact) {
         List<Contact> resultList = new ArrayList<>();
 
@@ -63,8 +61,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     }
 
     @Override
-    public Contact save(Contact contact) {
-        return null;
+    public void save(Contact contact) {
     }
 
     @Override

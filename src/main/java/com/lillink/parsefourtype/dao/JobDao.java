@@ -2,6 +2,7 @@ package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Job;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,10 +14,27 @@ public class JobDao extends Dao implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERRY = "select * from jobs";
     public static final String UPDATE_ALL_QUERRY = "update jobs set start_work = ?, position = ?, end_work = ?";
+    public static final String INSERT_ALL_QUERRY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?)";
+    public static final String FIND_BY_ID_QUERRY = "SELECT * FROM jobs WHERE id = ?";
 
     @Override
     public Job findById(Long id) {
-
+        Job job = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERRY);
+            statement.setObject(1,id);
+            ResultSet set = statement.executeQuery();
+            if (set.first()){
+                job = new Job();
+                job.setId(id);
+                job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
+                job.setPosition("position");
+                job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return job;
     }
 
     @Override
@@ -46,32 +64,17 @@ public class JobDao extends Dao implements BaseDao<Job>{
     }
 
     @Override
-    public Job update(Job job) {
-        List<Job> resultList = new ArrayList<>();
-
+    public void save(Job job) {
         try {
-            Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERRY);
+            PreparedStatement statement = connection.prepareStatement(INSERT_ALL_QUERRY);
+            statement.setString(1, job.getBeginWork());
+            statement.setString(2, job.getPosition());
+            statement.setString(3, job.getEndWork());
 
-            LocalDate begin = LocalDate.parse(set.getDate("start_work").toString());
-            String position = set.getString("position");
-            LocalDate end = LocalDate.parse(set.getDate("end_work").toString());
-
-            job.setBeginWork(begin);
-            job.setPosition(position);
-            job.setEndWork(end);
-
-            resultList.add(job);
-        }catch (SQLException e){
+            statement.execute();
+        } catch (SQLException e){
             e.printStackTrace();
         }
-
-        return null;
-    }
-
-    @Override
-    public Job save(Job job) {
-        return null;
     }
 
     @Override
