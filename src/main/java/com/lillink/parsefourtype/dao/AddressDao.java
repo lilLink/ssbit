@@ -12,17 +12,17 @@ import java.util.Objects;
 
 public class AddressDao extends Dao implements BaseDao<Address> {
 
-    public static final String FIND_ALL_QUERRY = "select * from address";
-    public static final String UPDATE_ALL_QUERRY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERRY = "SELECT * FROM address WHERE id = ?";
-    public static final String INSERT_ALL_QUERRY = "INSERT INTO address (country,city,street) VALUES (?,?,?)";
-    public static final String DELETE_BY_ID_QUERRY = "DELETE FROM address WHERE id = ?";
+    public static final String FIND_ALL_QUERY = "select * from address";
+    public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?)";
+    public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
     @Override
     public Address findById(Long id){
         Address address = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERRY);
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setLong(1,id);
             ResultSet set = statement.executeQuery();
             if (set.first()){
@@ -44,7 +44,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(FIND_ALL_QUERRY);
+            ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
 
             while (set.next()){
                 Address address = new Address();
@@ -65,7 +65,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERRY);
+            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERY);
 
 
         }catch (SQLException e){
@@ -76,11 +76,18 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     @Override
     public void save(Address address) {
         try {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ALL_QUERRY);
+            String actionQuery = (address.getId() == null) ? INSERT_ALL_QUERY
+                    : UPDATE_ALL_QUERY;
+            PreparedStatement statement = connection.prepareStatement(actionQuery);
+
 
             statement.setString(1,address.getCountry());
             statement.setString(2,address.getCity());
             statement.setString(3,address.getStreet());
+
+            if (address.getId() != null) {
+                statement.setLong(4, address.getId());
+            }
 
             statement.execute();
         }catch (SQLException e){
@@ -93,7 +100,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     public void delete(Long id) {
         PreparedStatement statement = null;
         try {
-            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERRY);
+            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
         }catch (SQLException e){

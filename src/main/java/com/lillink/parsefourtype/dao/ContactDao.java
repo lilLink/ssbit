@@ -59,26 +59,6 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
         return resultList;
     }
 
-    public Contact update(Contact contact) {
-        List<Contact> resultList = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERY);
-
-            String email = set.getString("email");
-            String number = set.getString("number");
-
-            contact.setEmail(email);
-            contact.setValue(number);
-
-            resultList.add(contact);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @Override
     public void save(Contact contact) {
         try {
@@ -88,6 +68,10 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
 
             statement.setString(1,contact.getEmail());
             statement.setString(2,contact.getValue());
+
+            if (contact.getId() != null) {
+                statement.setLong(4, contact.getId());
+            }
 
             statement.execute();
         }catch (SQLException e){

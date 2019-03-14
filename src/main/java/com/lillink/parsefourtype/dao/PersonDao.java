@@ -13,17 +13,17 @@ import java.util.Objects;
 
 public class PersonDao extends Dao implements BaseDao<Person> {
 
-    public static final String FIND_ALL_QUERRY = "select * from person";
-    public static final String UPDATE_ALL_QUERRY = "update person set first_name = ?, last_name = ?, birth_date = ?, skills = ?";
-    public static final String INSERT_ALL_QUERRY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
-    public static final String FIND_BY_ID_QUERRY = "SELECT * FROM person WHERE id = ?";
-    public static final String DELETE_BY_ID_QUERRY = "DELETE FROM person WHERE id = ?";
+    public static final String FIND_ALL_QUERY = "select * from person";
+    public static final String UPDATE_ALL_QUERY = "update person set first_name = ?, last_name = ?, birth_date = ?, skills = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM person WHERE id = ?";
+    public static final String DELETE_BY_ID_QUERY = "DELETE FROM person WHERE id = ?";
 
     @Override
     public Person findById(Long id){
         Person person = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERRY);
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
             if (set.first()){
@@ -46,7 +46,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(FIND_ALL_QUERRY);
+            ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
 
             while (set.next()){
                 Person person = new Person();
@@ -71,7 +71,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
         try {
             Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERRY);
+            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERY);
 
             String firstName = set.getString("first_name");
             String lastName = set.getString("last_name");
@@ -94,12 +94,18 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     @Override
     public void save(Person person) {
         try {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ALL_QUERRY);
+            String actionQuery = (person.getId() == null) ? INSERT_ALL_QUERY
+                    : UPDATE_ALL_QUERY;
+            PreparedStatement statement = connection.prepareStatement(actionQuery);
 
             statement.setString(1, person.getFirstName());
             statement.setString(2,person.getLastName());
             statement.setString(3,person.getBirthDate());
             statement.setString(4,person.getSkills());
+
+            if (person.getId() != null) {
+                statement.setLong(4, person.getId());
+            }
 
             statement.execute();
         }catch (SQLException e){
@@ -111,7 +117,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     public void delete(Long id) {
         PreparedStatement statement = null;
         try {
-            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERRY);
+            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
         }catch (SQLException e){
