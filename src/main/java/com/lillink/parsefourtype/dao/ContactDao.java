@@ -38,8 +38,9 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
                 contact.setEmail(set.getString("email"));
                 contact.setValue(set.getString("number"));
             }
+            LOGGER.trace("Contact {} found by id successfully ");
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't found in database");
         }
         return contact;
     }
@@ -47,7 +48,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     @Override
     public List<Contact> findAll(){
         List<Contact> resultList = new ArrayList<>();
-
+        LOGGER.trace("Started finding all in database");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -59,9 +60,9 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
 
                 resultList.add(contact);
             }
-            System.out.println("All contacts get from database");
+            LOGGER.trace("Contact found all in database");
         } catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact wasn't found in database");
         }
         return resultList;
     }
@@ -81,8 +82,9 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
             }
 
             statement.execute();
+            LOGGER.trace("Contact {} entered all in database", contact);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't entered all in database", contact, e);
         }
         return contact.getId();
     }
@@ -90,12 +92,14 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
+        LOGGER.trace("Started deleting by id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
+            LOGGER.trace("Contact with id {} deleted in database", id);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't deleted in database", id, e);
         }
     }
 }

@@ -36,8 +36,8 @@ public class JobDao extends Dao implements BaseDao<Job>{
                 job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
                 job.setPosition("position");
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
-                LOGGER.trace("Job {} found by id successfully ", id);
             }
+            LOGGER.trace("Job {} found by id successfully ", id);
         }catch (SQLException e){
             LOGGER.warn("Job {} wasn't found in database ", id, e);
         }
@@ -47,7 +47,7 @@ public class JobDao extends Dao implements BaseDao<Job>{
     @Override
     public List<Job> findAll() {
         List<Job> resultList = new ArrayList<>();
-        LOGGER.trace("Started finding all {} in database ");
+        LOGGER.trace("Started finding all in database ");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -62,9 +62,9 @@ public class JobDao extends Dao implements BaseDao<Job>{
 
                 resultList.add(job);
             }
-            LOGGER.trace("Job {} found all successfully ");
+            LOGGER.trace("Job found all successfully ");
         } catch (SQLException e) {
-            LOGGER.warn("Job {} wasn't found in database ", e);
+            LOGGER.warn("Job wasn't found in database ", e);
         }
 
         return resultList;
@@ -88,7 +88,7 @@ public class JobDao extends Dao implements BaseDao<Job>{
             statement.execute();
             LOGGER.trace("Job {} entered all in database", job);
         } catch (SQLException e){
-            LOGGER.warn("Job {} wasn't entered in database", job);
+            LOGGER.warn("Job {} wasn't entered in database", job, e);
         }
         return job.getId();
     }
