@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Contact {
 
     @XmlElement
+    private Long id;
+    @XmlElement
     private String email;
     @XmlElement
     private String value;
@@ -22,7 +24,8 @@ public class Contact {
     @Override
     public String toString() {
         return "Contact{" +
-                "email='" + email + '\'' +
+                "id=" + id +
+                ", email='" + email + '\'' +
                 ", value='" + value + '\'' +
                 '}';
     }

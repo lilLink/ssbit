@@ -2,20 +2,19 @@ package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Job;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JobDao extends Dao implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERRY = "select * from jobs";
-    public static final String UPDATE_ALL_QUERRY = "update jobs set start_work = ?, position = ?, end_work = ?";
-    public static final String INSERT_ALL_QUERRY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?)";
+    public static final String UPDATE_ALL_QUERY = "update jobs set start_work = ?, position = ?, end_work = ? WHERE id = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?)";
     public static final String FIND_BY_ID_QUERRY = "SELECT * FROM jobs WHERE id = ?";
+    public static final String DELETE_BY_ID_QUERRY = "DELETE FROM jobs WHERE id = ?";
 
     @Override
     public Job findById(Long id) {
@@ -66,10 +65,16 @@ public class JobDao extends Dao implements BaseDao<Job>{
     @Override
     public void save(Job job) {
         try {
-            PreparedStatement statement = connection.prepareStatement(INSERT_ALL_QUERRY);
-            statement.setString(1, job.getBeginWork());
+            String actionQuery = (job.getId() == null) ? INSERT_ALL_QUERY
+                                                       : UPDATE_ALL_QUERY;
+            PreparedStatement statement = connection.prepareStatement(actionQuery);
+
+            statement.setTimestamp(1, Timestamp.valueOf(job.getBeginWork().atStartOfDay()));
             statement.setString(2, job.getPosition());
-            statement.setString(3, job.getEndWork());
+            statement.setTimestamp(3, Timestamp.valueOf(job.getEndWork().atStartOfDay()));
+            if (job.getId() != null) {
+                statement.setLong(4, job.getId());
+            }
 
             statement.execute();
         } catch (SQLException e){
@@ -81,7 +86,9 @@ public class JobDao extends Dao implements BaseDao<Job>{
     public void delete(Long id) {
         PreparedStatement statement = null;
         try {
-
+            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERRY);
+            statement.setLong(1,id);
+            statement.execute();
         }catch (SQLException e){
             e.printStackTrace();
         }

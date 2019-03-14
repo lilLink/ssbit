@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PersonDao extends Dao implements BaseDao<Person> {
 
@@ -16,6 +17,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     public static final String UPDATE_ALL_QUERRY = "update person set first_name = ?, last_name = ?, birth_date = ?, skills = ?";
     public static final String INSERT_ALL_QUERRY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
     public static final String FIND_BY_ID_QUERRY = "SELECT * FROM person WHERE id = ?";
+    public static final String DELETE_BY_ID_QUERRY = "DELETE FROM person WHERE id = ?";
 
     @Override
     public Person findById(Long id){
@@ -107,6 +109,13 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
     @Override
     public void delete(Long id) {
-
+        PreparedStatement statement = null;
+        try {
+            statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERRY);
+            statement.setLong(1,id);
+            statement.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

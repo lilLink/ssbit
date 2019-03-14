@@ -40,8 +40,12 @@ public class Job {
                 '}';
     }
 
-    public String getBeginWork() {
+    public String getBeginWorkAsString() {
         return beginWork.toString();
+    }
+
+    public LocalDate getBeginWork() {
+        return beginWork;
     }
 
     public void setBeginWork(String beginWork) {
@@ -56,8 +60,12 @@ public class Job {
         this.position = position;
     }
 
-    public String getEndWork() {
+    public String getEndWorkAsString() {
         return endWork.toString();
+    }
+
+    public LocalDate getEndWork() {
+        return endWork;
     }
 
     public void setEndWork(String endWork) {
