@@ -60,7 +60,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     }
 
     @Override
-    public void save(Contact contact) {
+    public Long save(Contact contact) {
         try {
             String actionQuery = (contact.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -77,6 +77,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
         }catch (SQLException e){
             e.printStackTrace();
         }
+        return contact.getId();
     }
 
     @Override

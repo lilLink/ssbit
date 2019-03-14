@@ -65,34 +65,8 @@ public class PersonDao extends Dao implements BaseDao<Person> {
         return resultList;
     }
 
-    public Person update(Person person) {
-
-        List<Person> resultList = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERY);
-
-            String firstName = set.getString("first_name");
-            String lastName = set.getString("last_name");
-            LocalDate birthDate = LocalDate.parse(set.getDate("birth_date").toString());
-            String skills = set.getString("skills");
-
-            person.setFirstName(firstName);
-            person.setLastName(lastName);
-            person.setBirthDate(birthDate);
-            person.setSkills(skills);
-
-            resultList.add(person);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     @Override
-    public void save(Person person) {
+    public Long save(Person person) {
         try {
             String actionQuery = (person.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -111,6 +85,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
         }catch (SQLException e){
             e.printStackTrace();
         }
+        return person.getId();
     }
 
     @Override

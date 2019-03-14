@@ -63,7 +63,7 @@ public class JobDao extends Dao implements BaseDao<Job>{
     }
 
     @Override
-    public void save(Job job) {
+    public Long save(Job job) {
         try {
             String actionQuery = (job.getId() == null) ? INSERT_ALL_QUERY
                                                        : UPDATE_ALL_QUERY;
@@ -80,6 +80,7 @@ public class JobDao extends Dao implements BaseDao<Job>{
         } catch (SQLException e){
             e.printStackTrace();
         }
+        return job.getId();
     }
 
     @Override

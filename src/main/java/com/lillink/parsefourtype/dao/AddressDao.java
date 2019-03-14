@@ -74,7 +74,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     }
 
     @Override
-    public void save(Address address) {
+    public Long save(Address address) {
         try {
             String actionQuery = (address.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -93,7 +93,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
+        return address.getId();
     }
 
     @Override
