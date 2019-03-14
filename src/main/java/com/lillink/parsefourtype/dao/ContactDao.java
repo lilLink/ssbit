@@ -1,6 +1,7 @@
 package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Contact;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,17 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
+import static org.apache.logging.log4j.LogManager.getLogger;
+
 public class ContactDao extends Dao implements BaseDao<Contact> {
 
-    public static final String FIND_ALL_QUERY = "select * from contact";
-    public static final String UPDATE_ALL_QUERY = "update contacts set email = ?, number = ?";
+    public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
+    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 
+    public static final Logger LOGGER = getLogger(getClassName());
+
     @Override
     public Contact findById(Long id){
         Contact contact = null;
+        LOGGER.trace("Started finding by id {} in database");
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setObject(1,id);

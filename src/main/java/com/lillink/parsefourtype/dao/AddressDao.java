@@ -9,18 +9,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.apache.logging.log4j.Logger;
+
+import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class AddressDao extends Dao implements BaseDao<Address> {
 
-    public static final String FIND_ALL_QUERY = "select * from address";
+    public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
+    public static final Logger LOGGER = getLogger(getClassName());
+
     @Override
     public Address findById(Long id){
         Address address = null;
+        LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setLong(1,id);
@@ -31,9 +38,10 @@ public class AddressDao extends Dao implements BaseDao<Address> {
                 address.setCountry("country");
                 address.setCity("city");
                 address.setStreet("street");
+                LOGGER.trace("Address {} found by id successfully", id);
             }
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Address {} wasn't found in database", id, e);
         }
         return address;
     }
@@ -41,7 +49,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     @Override
     public List<Address> findAll(){
         List<Address> resultList = new ArrayList<>();
-
+        LOGGER.trace("Started finding all {} in database");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -53,24 +61,12 @@ public class AddressDao extends Dao implements BaseDao<Address> {
                 address.setStreet(set.getString("street"));
 
                 resultList.add(address);
+                LOGGER.trace("Address {} found all successfully",address);
             }
-            System.out.println("All contacts get from database");
         } catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Address {} wasn't found in database",e);
         }
         return resultList;
-    }
-
-    public void update(Address address) {
-
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(UPDATE_ALL_QUERY);
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -90,8 +86,9 @@ public class AddressDao extends Dao implements BaseDao<Address> {
             }
 
             statement.execute();
+            LOGGER.trace("Address {} entered all in database", address);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Address {} wasn't entered in database", address);
         }
         return address.getId();
     }
@@ -99,12 +96,14 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
+        LOGGER.trace("Started deleting client with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
+            LOGGER.trace("Address with id {} deleted successfully", id);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Address {} wasn't delete in database", id, e);
         }
     }
 }
