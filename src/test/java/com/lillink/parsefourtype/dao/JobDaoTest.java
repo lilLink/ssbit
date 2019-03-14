@@ -34,4 +34,9 @@ public class JobDaoTest {
 
         jobDao.save(job2);
     }
+
+    @Test
+    public void testDelete(){
+        jobDao.delete(9L);
+    }
 }
