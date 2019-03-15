@@ -17,7 +17,7 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class ContactDao extends Dao implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
-    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ?";
+    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
@@ -78,7 +78,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
             statement.setString(2,contact.getValue());
 
             if (contact.getId() != null) {
-                statement.setLong(4, contact.getId());
+                statement.setLong(3, contact.getId());
             }
 
             statement.execute();
