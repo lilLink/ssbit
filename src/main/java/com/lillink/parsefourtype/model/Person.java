@@ -55,11 +55,15 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public String getBirthDate() {
+    public String getBirthDateAsString() {
         return birthDate.toString();
     }
 
-    public void setBirthDate(String birthDate) {
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDateAsString(String birthDate) {
         this.birthDate = LocalDate.parse(birthDate);
     }
 

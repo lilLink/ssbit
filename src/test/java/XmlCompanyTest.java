@@ -5,6 +5,7 @@ import com.lillink.parsefourtype.service.writer.XmlCompanyWriter;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class XmlCompanyTest {
         Person person = new Person();
         person.setFirstName("Vadym");
         person.setLastName("Ptitsyn");
-        person.setBirthDate("2000-08-07");
+        person.setBirthDate(LocalDate.parse("2000-08-07"));
 
         Address address = new Address();
         address.setCountry("Ukraine");

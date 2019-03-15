@@ -92,7 +92,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
-        LOGGER.trace("Started deleting by id {} from database", id);
+        LOGGER.trace("Started deleting contact with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
