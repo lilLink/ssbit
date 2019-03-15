@@ -3,10 +3,7 @@ package com.lillink.parsefourtype.dao;
 import com.lillink.parsefourtype.model.Person;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +15,7 @@ import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
 public class PersonDao extends Dao implements BaseDao<Person> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM person";
-    public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ?, skills = ?";
+    public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ?, skills = ? WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM person WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM person WHERE id = ?";
@@ -82,11 +79,11 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
             statement.setString(1, person.getFirstName());
             statement.setString(2,person.getLastName());
-            statement.setString(3,person.getBirthDateAsString());
+            statement.setDate(3, Date.valueOf(LocalDate.parse(person.getBirthDate().toString())));
             statement.setString(4,person.getSkills());
 
             if (person.getId() != null) {
-                statement.setLong(4, person.getId());
+                statement.setLong(5, person.getId());
             }
 
             statement.execute();
