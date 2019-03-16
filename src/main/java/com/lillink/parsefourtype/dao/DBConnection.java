@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class Dao {
+public abstract class DBConnection {
 
     private static final String URL = "jdbc:postgresql://localhost:5433/parse";
     private static final String USER = "postgres";
@@ -13,7 +13,7 @@ public abstract class Dao {
 
     protected Connection connection;
 
-    public Dao() {
+    public DBConnection() {
         initConnection();
     }
 

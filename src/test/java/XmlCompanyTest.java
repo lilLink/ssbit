@@ -37,7 +37,7 @@ public class XmlCompanyTest {
         List<Contact> contactList = new ArrayList<>();
         Contact contact = new Contact();
         contact.setEmail("lillinkwrk@gmail.com");
-        contact.setValue("+38 095 464 46 95");
+        contact.setNumber("+38 095 464 46 95");
         person.setContacts(contactList);
 
         personList.add(person);
