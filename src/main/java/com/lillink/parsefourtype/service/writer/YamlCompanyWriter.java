@@ -22,7 +22,7 @@ public class YamlCompanyWriter extends Writer<Company> {
         }
     }
 
-    public void   serializeYAML(Company company) throws IOException {
+    public void serializeYAML(Company company) throws IOException {
         Yaml yaml = new Yaml();
         FileWriter fileWriter = new FileWriter(path);
         yaml.dump(company,fileWriter);
