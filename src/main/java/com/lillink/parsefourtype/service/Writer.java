@@ -1,7 +1,5 @@
 package com.lillink.parsefourtype.service;
 
-import com.lillink.parsefourtype.model.Company;
-
 public abstract class Writer<T> {
 
     protected final String path;
@@ -10,5 +8,5 @@ public abstract class Writer<T> {
         this.path = path;
     }
 
-    public abstract int write(T instance);
+    public abstract void write(T instance);
 }

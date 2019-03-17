@@ -16,23 +16,20 @@ public class XmlCompanyWriter extends Writer<Company> {
     }
 
     @Override
-    public int write(Company company){
+    public void write(Company company){
         try {
-            return this.serializeXml(company);
+            this.serializeXml(company);
         }catch (IOException e){
             e.printStackTrace();
-            return 0;
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
-    public int serializeXml(Company company) throws IOException, JAXBException {
+    public void serializeXml(Company company) throws IOException, JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,true);
         marshaller.marshal(company, new File(path));
-        return 0;
     }
 }
