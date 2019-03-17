@@ -16,7 +16,7 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
-    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ?";
+    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
@@ -37,8 +37,9 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
                 contact.setEmail(set.getString("email"));
                 contact.setNumber(set.getString("number"));
             }
+            LOGGER.trace("Contact {} found by id successfully ");
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't found in database");
         }
         return contact;
     }
@@ -46,7 +47,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     @Override
     public List<Contact> findAll(){
         List<Contact> resultList = new ArrayList<>();
-
+        LOGGER.trace("Started finding all in database");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -58,9 +59,9 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
                 resultList.add(contact);
             }
-            System.out.println("All contacts get from database");
+            LOGGER.trace("Contact found all in database");
         } catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact wasn't found in database");
         }
         return resultList;
     }
@@ -76,12 +77,13 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
             statement.setString(2,contact.getNumber());
 
             if (contact.getId() != null) {
-                statement.setLong(4, contact.getId());
+                statement.setLong(3, contact.getId());
             }
 
             statement.execute();
+            LOGGER.trace("Contact {} entered all in database", contact);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't entered all in database", contact, e);
         }
         return contact.getId();
     }
@@ -89,12 +91,14 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
+        LOGGER.trace("Started deleting contact with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
+            LOGGER.trace("Contact with id {} deleted in database", id);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't deleted in database", id, e);
         }
     }
 }

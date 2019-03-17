@@ -37,8 +37,8 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
                 address.setCountry("country");
                 address.setCity("city");
                 address.setStreet("street");
-                LOGGER.trace("Address {} found by id successfully", id);
             }
+            LOGGER.trace("Address {} found by id successfully", id);
         }catch (SQLException e){
             LOGGER.warn("Address {} wasn't found in database", id, e);
         }
@@ -48,7 +48,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
     @Override
     public List<Address> findAll(){
         List<Address> resultList = new ArrayList<>();
-        LOGGER.trace("Started finding all {} in database");
+        LOGGER.trace("Started finding all in database");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -60,10 +60,10 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
                 address.setStreet(set.getString("street"));
 
                 resultList.add(address);
-                LOGGER.trace("Address {} found all successfully",address);
             }
+            LOGGER.trace("Address found all successfully");
         } catch (SQLException e){
-            LOGGER.warn("Address {} wasn't found in database",e);
+            LOGGER.warn("Address wasn't found in database",e);
         }
         return resultList;
     }
@@ -95,7 +95,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
-        LOGGER.trace("Started deleting client with id {} from database", id);
+        LOGGER.trace("Started deleting address with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);

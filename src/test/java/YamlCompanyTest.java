@@ -23,7 +23,7 @@ public class YamlCompanyTest {
         Person person = new Person();
         person.setFirstName("Vadym");
         person.setLastName("Ptitsyn");
-        person.setBirthDate("2000-08-07");
+        person.setBirthDateAsString("2000-08-07");
 
         List<Job> jobList = new ArrayList<>();
         Job job = new Job();
