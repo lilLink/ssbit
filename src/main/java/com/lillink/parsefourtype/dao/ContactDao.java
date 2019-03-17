@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-public class ContactDao extends Dao implements BaseDao<Contact> {
+public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
     public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
@@ -22,7 +21,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 
-    public static final Logger LOGGER = getLogger(getClassName());
+    public static final Logger LOGGER = getLogger();
 
     @Override
     public Contact findById(Long id){
@@ -36,7 +35,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
                 contact = new Contact();
                 contact.setId(id);
                 contact.setEmail(set.getString("email"));
-                contact.setValue(set.getString("number"));
+                contact.setNumber(set.getString("number"));
             }
             LOGGER.trace("Contact {} found by id successfully ");
         }catch (SQLException e){
@@ -56,7 +55,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
             while (set.next()){
                 Contact contact = new Contact();
                 contact.setEmail(set.getString("email"));
-                contact.setValue(set.getString("number"));
+                contact.setNumber(set.getString("number"));
 
                 resultList.add(contact);
             }
@@ -75,7 +74,7 @@ public class ContactDao extends Dao implements BaseDao<Contact> {
             PreparedStatement statement = connection.prepareStatement(actionQuery);
 
             statement.setString(1,contact.getEmail());
-            statement.setString(2,contact.getValue());
+            statement.setString(2,contact.getNumber());
 
             if (contact.getId() != null) {
                 statement.setLong(3, contact.getId());

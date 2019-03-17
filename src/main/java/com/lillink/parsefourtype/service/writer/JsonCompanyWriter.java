@@ -18,17 +18,17 @@ public class JsonCompanyWriter extends Writer<Company> {
     }
 
     @Override
-    public int write(Company company){
+    public void write(Company company){
         try {
-            return this.serializeJson(company);
+            this.serializeJson(company);
         }
         catch (IOException e){
             e.printStackTrace();
-            return 0;
+
         }
     }
 
-    public int serializeJson(Company company) throws IOException {
+    public void serializeJson(Company company) throws IOException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocaleDateAdapterJson()).create();
 
@@ -36,6 +36,5 @@ public class JsonCompanyWriter extends Writer<Company> {
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(gson.toJson(company));
         fileWriter.close();
-        return 0;
     }
 }

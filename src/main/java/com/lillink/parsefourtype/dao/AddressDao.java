@@ -11,10 +11,9 @@ import java.util.List;
 import java.util.Objects;
 import org.apache.logging.log4j.Logger;
 
-import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-public class AddressDao extends Dao implements BaseDao<Address> {
+public class AddressDao extends DBConnection implements BaseDao<Address> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
@@ -22,7 +21,7 @@ public class AddressDao extends Dao implements BaseDao<Address> {
     public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?)";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
-    public static final Logger LOGGER = getLogger(getClassName());
+    public static final Logger LOGGER = getLogger();
 
     @Override
     public Address findById(Long id){

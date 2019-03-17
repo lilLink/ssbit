@@ -1,15 +1,18 @@
 package com.lillink.parsefourtype.model;
 
 import com.lillink.parsefourtype.adapter.LocaleDateAdapter;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.math.BigInteger;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @XmlRootElement(name = "Job")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Job {
@@ -26,6 +29,9 @@ public class Job {
     private LocalDate endWork;
 
     @XmlElement
+    private String jobCompany;
+
+    @XmlElement
     private Long id;
 
     public Job(){}
@@ -36,6 +42,7 @@ public class Job {
                 "beginWork=" + beginWork +
                 ", position='" + position + '\'' +
                 ", endWork=" + endWork +
+                ", jobCompany='" + jobCompany + '\'' +
                 ", id=" + id +
                 '}';
     }
@@ -44,47 +51,8 @@ public class Job {
         return beginWork.toString();
     }
 
-    public LocalDate getBeginWork() {
-        return beginWork;
-    }
-
-    public void setBeginWork(String beginWork) {
+    public void setBeginWorkAsString(String beginWork) {
         this.beginWork = LocalDate.parse(beginWork);
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getEndWorkAsString() {
-        return endWork.toString();
-    }
-
-    public LocalDate getEndWork() {
-        return endWork;
-    }
-
-    public void setEndWork(String endWork) {
-        this.endWork = LocalDate.parse(endWork);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setBeginWork(LocalDate beginWork) {
-        this.beginWork = beginWork;
-    }
-
-    public void setEndWork(LocalDate endWork) {
-        this.endWork = endWork;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

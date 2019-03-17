@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
 
-public class JobDao extends Dao implements BaseDao<Job>{
+public class JobDao extends DBConnection implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
     public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, position = ?, end_work = ? WHERE id = ?";
@@ -20,7 +19,7 @@ public class JobDao extends Dao implements BaseDao<Job>{
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
-    private static final Logger LOGGER = getLogger(getClassName());
+    private static final Logger LOGGER = getLogger();
 
     @Override
     public Job findById(Long id) {
@@ -72,7 +71,6 @@ public class JobDao extends Dao implements BaseDao<Job>{
 
     @Override
     public Long save(Job job) {
-//        LOGGER.trace("Started saving");
         try {
             String actionQuery = (job.getId() == null) ? INSERT_ALL_QUERY
                                                        : UPDATE_ALL_QUERY;

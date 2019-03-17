@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static com.lillink.parsefourtype.utility.ClassNameUtil.getClassName;
 
-public class PersonDao extends Dao implements BaseDao<Person> {
+public class PersonDao extends DBConnection implements BaseDao<Person> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM person";
     public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ?, skills = ? WHERE id = ?";
@@ -20,7 +19,7 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM person WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM person WHERE id = ?";
 
-    public static final Logger LOGGER = getLogger(getClassName());
+    public static final Logger LOGGER = getLogger();
 
     @Override
     public Person findById(Long id){
@@ -38,9 +37,9 @@ public class PersonDao extends Dao implements BaseDao<Person> {
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
                 person.setSkills(set.getString("skills"));
             }
-            LOGGER.trace("Person {} found by id successfully", id);
+            LOGGER.trace("Person {} found by id is successfully", id);
         }catch (SQLException e){
-            LOGGER.warn("Person {} wasn't found in database", id, e);
+            LOGGER.warn("Person {} wasn't found by id in database", id, e);
         }
         return person;
     }
@@ -63,9 +62,10 @@ public class PersonDao extends Dao implements BaseDao<Person> {
 
                 resultList.add(person);
             }
-            LOGGER.trace("Person found all successfully");
+
+            LOGGER.trace("Person found all in database");
         } catch (SQLException e){
-            LOGGER.warn("Person wasn't found in database", e);
+            LOGGER.warn("Person {} wasn't found all in database", e);
         }
         return resultList;
     }
@@ -97,14 +97,15 @@ public class PersonDao extends Dao implements BaseDao<Person> {
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
-        LOGGER.trace("Started deleteing person with id {} in database", id);
+
+        LOGGER.trace("Started deleting person with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
-            LOGGER.trace("Person with id {} deleted successfully ", id);
+            LOGGER.trace("Person with id {} deleted successfully", id);
         }catch (SQLException e){
-            LOGGER.warn("Person {} wasn't deleted in database", id ,e);
+            LOGGER.warn("Person {} wasn't delete in database", id, e);
         }
     }
 }

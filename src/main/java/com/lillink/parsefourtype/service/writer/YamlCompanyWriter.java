@@ -14,19 +14,17 @@ public class YamlCompanyWriter extends Writer<Company> {
     }
 
     @Override
-   public int write(Company company) {
+   public void write(Company company) {
         try {
-            return this.serializeYAML(company);
+            this.serializeYAML(company);
         } catch (IOException e) {
             e.printStackTrace();
-            return 0;
         }
     }
 
-    public int  serializeYAML(Company company) throws IOException {
+    public void serializeYAML(Company company) throws IOException {
         Yaml yaml = new Yaml();
         FileWriter fileWriter = new FileWriter(path);
         yaml.dump(company,fileWriter);
-        return 0;
     }
 }

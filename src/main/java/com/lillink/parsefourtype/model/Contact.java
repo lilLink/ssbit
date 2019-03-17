@@ -19,14 +19,14 @@ public class Contact {
     @XmlElement
     private String email;
     @XmlElement
-    private String value;
+    private String number;
 
     @Override
     public String toString() {
         return "Contact{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", value='" + value + '\'' +
+                ", number='" + number + '\'' +
                 '}';
     }
 
