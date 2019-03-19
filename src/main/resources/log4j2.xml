@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="logPath">./logs/</Property>
+        <Property name="rollingFileName">logFile</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %level [%t] [%M] [%l] - %msg%n" />
+        </Console>
+        <RollingFile name="rollingFile" fileName="${logPath}/${rollingFileName}.log" filePattern="${logPath}/${rollingFileName}_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%t] [%M] [%l] - %msg%n"/>
+            <Policies>
+                <!-- Causes a rollover if the log file is older than the current JVM's start time -->
+                <OnStartupTriggeringPolicy />
+                <!-- Causes a rollover once the date/time pattern no longer applies to the active file -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="console" level="info"/>
+            <AppenderRef ref="rollingFile" level="trace" />
+        </Root>
+    </Loggers>
+</Configuration>
