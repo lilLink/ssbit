@@ -17,8 +17,8 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?)";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?;";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
     public static final Logger LOGGER = getLogger();
@@ -29,14 +29,14 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
         LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
-            statement.setLong(1,id);
+            statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
-            if (set.first()){
+            if (set.next()){
                 address = new Address();
                 address.setId(id);
-                address.setCountry("country");
-                address.setCity("city");
-                address.setStreet("street");
+                address.setCountry(set.getString("country"));
+                address.setCity(set.getString("city"));
+                address.setStreet(set.getString("street"));
                 LOGGER.trace("Address {} found by id successfully", id);
             }
         }catch (SQLException e){
@@ -70,6 +70,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
 
     @Override
     public Long save(Address address) {
+        Long savedId = null;
         try {
             String actionQuery = (address.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -84,12 +85,14 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
                 statement.setLong(4, address.getId());
             }
 
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            savedId = resultSet.getLong("id");
             LOGGER.trace("Address {} entered all in database", address);
         }catch (SQLException e){
             LOGGER.warn("Address {} wasn't entered in database", address);
         }
-        return address.getId();
+        return savedId;
     }
 
     @Override

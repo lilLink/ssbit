@@ -1,6 +1,7 @@
 package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Contact;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -29,6 +30,18 @@ public class ContactDaoTest {
         contact2.setId(3L);
 
         contactDao.save(contact2);
+    }
+
+    @Test
+    public void testFindById(){
+        Contact contact1 = new Contact();
+
+        contact1.setEmail("lillinkwrk@gmail.com");
+        contact1.setNumber("+380 95 464 46 95");
+
+        Long savedId = contactDao.save(contact1);
+
+        Assert.assertEquals(contactDao.findById(savedId), contact1);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.lillink.parsefourtype.dao;
 
 import com.lillink.parsefourtype.model.Address;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -33,7 +34,14 @@ public class AddressDaoTest {
 
     @Test
     public void testFindById(){
-        addressDao.findById(1L);
+        Address address1 = new Address();
+        address1.setCountry("Ukraine");
+        address1.setCity("Chernivtsi");
+        address1.setStreet("Golovna 204");
+
+        Long savedId = addressDao.save(address1);
+
+        Assert.assertEquals(addressDao.findById(savedId), address1);
     }
 
     @Test

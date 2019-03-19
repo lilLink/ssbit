@@ -15,7 +15,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
     public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, position = ?, end_work = ? WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?)";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?) RETURNING id";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
@@ -29,11 +29,11 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
-            if (set.first()){
+            if (set.next()){
                 job = new Job();
                 job.setId(id);
                 job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
-                job.setPosition("position");
+                job.setPosition(set.getString("position"));
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
                 LOGGER.trace("Job {} found by id successfully ", id);
             }
@@ -46,7 +46,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
     @Override
     public List<Job> findAll() {
         List<Job> resultList = new ArrayList<>();
-        LOGGER.trace("Started finding all {} in database ");
+        LOGGER.trace("Started finding all in database ");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -61,7 +61,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
                 resultList.add(job);
             }
-            LOGGER.trace("Job {} found all successfully ");
+            LOGGER.trace("Job found all successfully ");
         } catch (SQLException e) {
             LOGGER.warn("Job {} wasn't found in database ", e);
         }
@@ -71,6 +71,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
     @Override
     public Long save(Job job) {
+        Long savedId = null;
         try {
             String actionQuery = (job.getId() == null) ? INSERT_ALL_QUERY
                                                        : UPDATE_ALL_QUERY;
@@ -83,12 +84,14 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
                 statement.setLong(4, job.getId());
             }
 
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            savedId = resultSet.getLong("id");
             LOGGER.trace("Job {} entered all in database", job);
         } catch (SQLException e){
-            LOGGER.warn("Job {} wasn't entered in database", job);
+            LOGGER.warn("Job {} wasn't entered in database", job, e);
         }
-        return job.getId();
+        return savedId;
     }
 
     @Override

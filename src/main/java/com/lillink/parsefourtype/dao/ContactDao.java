@@ -16,9 +16,9 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
-    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ?";
+    public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?)";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 
     public static final Logger LOGGER = getLogger();
@@ -26,19 +26,20 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     @Override
     public Contact findById(Long id){
         Contact contact = null;
-        LOGGER.trace("Started finding by id {} in database");
+        LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
-            if (set.first()){
+            if (set.next()){
                 contact = new Contact();
                 contact.setId(id);
                 contact.setEmail(set.getString("email"));
                 contact.setNumber(set.getString("number"));
             }
+            LOGGER.trace("Contact {} found by id successfully", id);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't found in database", id);
         }
         return contact;
     }
@@ -46,7 +47,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     @Override
     public List<Contact> findAll(){
         List<Contact> resultList = new ArrayList<>();
-
+        LOGGER.trace("Started finding all in database");
         try {
             Statement statement = connection.createStatement();
             ResultSet set = statement.executeQuery(FIND_ALL_QUERY);
@@ -58,15 +59,16 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
                 resultList.add(contact);
             }
-            System.out.println("All contacts get from database");
+            LOGGER.trace("Contact found all successfully");
         } catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't found in database",e);
         }
         return resultList;
     }
 
     @Override
     public Long save(Contact contact) {
+        Long savedId = null;
         try {
             String actionQuery = (contact.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -76,25 +78,30 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
             statement.setString(2,contact.getNumber());
 
             if (contact.getId() != null) {
-                statement.setLong(4, contact.getId());
+                statement.setLong(3, contact.getId());
             }
 
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            savedId = resultSet.getLong("id");
+            LOGGER.trace("Contact {} entered all in database",contact);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't entered in database", contact, e);
         }
-        return contact.getId();
+        return savedId;
     }
 
     @Override
     public void delete(Long id) {
         PreparedStatement statement = null;
+        LOGGER.trace("Started deleting contact with id {} from database", id);
         try {
             statement = Objects.requireNonNull(connection).prepareStatement(DELETE_BY_ID_QUERY);
             statement.setLong(1,id);
             statement.execute();
+            LOGGER.trace("Contact with id {} deleted successfully", id);
         }catch (SQLException e){
-            e.printStackTrace();
+            LOGGER.warn("Contact {} wasn't delete in database", id, e);
         }
     }
 }

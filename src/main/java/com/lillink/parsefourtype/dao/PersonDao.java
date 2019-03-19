@@ -16,9 +16,9 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class PersonDao extends DBConnection implements BaseDao<Person> {
 
-    public static final String FIND_ALL_QUERY = "select * from person";
-    public static final String UPDATE_ALL_QUERY = "update person set first_name = ?, last_name = ?, birth_date = ?, skills = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?)";
+    public static final String FIND_ALL_QUERY = "SELECT * FROM person";
+    public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ?, skills = ? WHERE id = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?) RETURNING id";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM person WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM person WHERE id = ?";
 
@@ -32,13 +32,13 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
-            if (set.first()){
+            if (set.next()){
                 person = new Person();
                 person.setId(id);
                 person.setFirstName(set.getString("first_name"));
                 person.setLastName(set.getString("last_name"));
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
-                person.setSkills(set.getString("skills"));
+               // person.setSkills(set.getArray("skills"));
             }
             LOGGER.trace("Person {} found by id is successfully", id);
         }catch (SQLException e){
@@ -60,8 +60,7 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
                 person.setFirstName(set.getString("first_name"));
                 person.setLastName(set.getString("last_name"));
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
-                person.setSkills(set.getString("skills"));
-
+               // person.setSkills(set.getString("skills"));
 
                 resultList.add(person);
             }
@@ -74,6 +73,7 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
 
     @Override
     public Long save(Person person) {
+        Long savedId = null;
         try {
             String actionQuery = (person.getId() == null) ? INSERT_ALL_QUERY
                     : UPDATE_ALL_QUERY;
@@ -81,19 +81,21 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
 
             statement.setString(1, person.getFirstName());
             statement.setString(2,person.getLastName());
-            statement.setString(3,person.getBirthDate());
-            statement.setString(4,person.getSkills());
+            statement.setString(3,person.getBirthDate().toString());
+            //statement.setString(4,person.getSkills());
 
             if (person.getId() != null) {
-                statement.setLong(4, person.getId());
+                statement.setLong(5, person.getId());
             }
 
-            statement.execute();
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            savedId = resultSet.getLong("id");
             LOGGER.trace("Person {} entered all in database", person);
         }catch (SQLException e){
             LOGGER.warn("Person {} wasn't entered in database", person, e);
         }
-        return person.getId();
+        return savedId;
     }
 
     @Override

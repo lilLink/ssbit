@@ -1,3 +1,5 @@
+package service;
+
 import com.lillink.parsefourtype.model.*;
 import com.lillink.parsefourtype.service.*;
 import com.lillink.parsefourtype.service.parser.XmlCompanyParser;
@@ -5,6 +7,7 @@ import com.lillink.parsefourtype.service.writer.XmlCompanyWriter;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class XmlCompanyTest {
         Person person = new Person();
         person.setFirstName("Vadym");
         person.setLastName("Ptitsyn");
-        person.setBirthDate("2000-08-07");
+        person.setBirthDate(LocalDate.parse("2000-08-07"));
 
         Address address = new Address();
         address.setCountry("Ukraine");
@@ -29,9 +32,9 @@ public class XmlCompanyTest {
 
         List<Job> jobList = new ArrayList<>();
         Job job = new Job();
-        job.setBeginWork("2019-03-04");
+        job.setBeginWork(LocalDate.parse("2019-03-04"));
         job.setPosition("Student");
-        job.setEndWork("2019-06-04");
+        job.setEndWork(LocalDate.parse("2019-06-04"));
         person.setJobs(jobList);
 
         List<Contact> contactList = new ArrayList<>();

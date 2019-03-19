@@ -33,7 +33,7 @@ public class Person {
     @XmlElementWrapper
     private List<Contact> contacts;
     @XmlElement
-    private List skills;
+    private List<String> skills;
 
     public String getBirthDateAsString() {
         return birthDate.toString();
