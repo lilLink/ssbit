@@ -45,6 +45,10 @@ public class AddressDaoTest {
     }
 
     @Test
+    public void testFindAll(){
+        addressDao.findAll();
+    }
+    @Test
     public void testDelete(){
         addressDao.delete(3L);
     }

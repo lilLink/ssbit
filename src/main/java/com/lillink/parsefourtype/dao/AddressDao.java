@@ -55,6 +55,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
 
             while (set.next()){
                 Address address = new Address();
+                address.setId(set.getLong("id"));
                 address.setCountry(set.getString("country"));
                 address.setCity(set.getString("city"));
                 address.setStreet(set.getString("street"));

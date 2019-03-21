@@ -15,7 +15,7 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
-    public static final String FIND_ALL_QUERY = "SELECT * FROM contact";
+    public static final String FIND_ALL_QUERY = "SELECT * FROM contacts";
     public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?) RETURNING id";
@@ -54,6 +54,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
             while (set.next()){
                 Contact contact = new Contact();
+                contact.setId(set.getLong("id"));
                 contact.setEmail(set.getString("email"));
                 contact.setNumber(set.getString("number"));
 

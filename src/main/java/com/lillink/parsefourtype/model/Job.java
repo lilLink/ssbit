@@ -32,6 +32,9 @@ public class Job {
     private String jobCompany;
 
     @XmlElement
+    private String skill;
+
+    @XmlElement
     private Long id;
 
     public Job(){}
@@ -43,6 +46,7 @@ public class Job {
                 ", position='" + position + '\'' +
                 ", endWork=" + endWork +
                 ", jobCompany='" + jobCompany + '\'' +
+                ", skill='" + skill + '\'' +
                 ", id=" + id +
                 '}';
     }

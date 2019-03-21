@@ -32,8 +32,7 @@ public class Person {
     @XmlElement
     @XmlElementWrapper
     private List<Contact> contacts;
-    @XmlElement
-    private List<String> skills;
+
 
     public String getBirthDateAsString() {
         return birthDate.toString();
@@ -55,7 +54,6 @@ public class Person {
                 ", jobs=" + jobs +
                 ", address=" + address +
                 ", contacts=" + contacts +
-                ", skills='" + skills + '\'' +
                 '}';
     }
 }

@@ -57,6 +57,7 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
 
             while (set.next()){
                 Person person = new Person();
+                person.setId(set.getLong("id"));
                 person.setFirstName(set.getString("first_name"));
                 person.setLastName(set.getString("last_name"));
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));

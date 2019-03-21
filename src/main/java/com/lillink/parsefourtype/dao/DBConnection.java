@@ -14,11 +14,17 @@ public abstract class DBConnection {
     protected Connection connection;
 
     public DBConnection() {
-        initConnection();
+        try {
+            initConnection();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initConnection() {
+    private void initConnection() throws ClassNotFoundException {
         try {
+        Class.forName("org.postgresql.Driver");
+
             Properties properties = new Properties();
             properties.setProperty("user", USER);
             properties.setProperty("password", PASSWORD);

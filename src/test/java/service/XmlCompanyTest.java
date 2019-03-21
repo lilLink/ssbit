@@ -15,7 +15,7 @@ public class XmlCompanyTest {
 
     @Test
     public void serializeTest(){
-        String path = "resume.xml";
+        String path = "F:\\IDEA Projects\\ParserFourType\\src\\main\\resources\\resume.xml";
         Writer<Company> writer = new XmlCompanyWriter(path);
 
         List<Person> personList = new ArrayList<Person>();

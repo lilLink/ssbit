@@ -16,7 +16,7 @@ public class JsonCompanyTest {
     @Test
     public void serializeTest(){
 
-        String path = "resume.json";
+        String path = "F:\\IDEA Projects\\ParserFourType\\src\\main\\resources\\resume.json";
         Writer<Company> writer = new JsonCompanyWriter(path);
 
         List<Person> personList = new ArrayList<Person>();

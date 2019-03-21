@@ -14,8 +14,8 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class JobDao extends DBConnection implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
-    public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, position = ?, end_work = ? WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,position,end_work) VALUES (?,?,?) RETURNING id";
+    public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, job_company = ?, skill = ?, position = ?, end_work = ? WHERE id = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,job_company,skill,position,end_work) VALUES (?,?,?,?,?) RETURNING id";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
@@ -33,6 +33,8 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
                 job = new Job();
                 job.setId(id);
                 job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
+                job.setJobCompany(set.getString("job_company"));
+                job.setSkill(set.getString("skill"));
                 job.setPosition(set.getString("position"));
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
                 LOGGER.trace("Job {} found by id successfully ", id);
@@ -56,6 +58,8 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
                 job.setId(set.getLong("id"));
                 job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
+                job.setJobCompany(set.getString("skill"));
+                job.setSkill(set.getString("skill"));
                 job.setPosition(set.getString("position"));
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
 
@@ -78,10 +82,12 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
             PreparedStatement statement = connection.prepareStatement(actionQuery);
 
             statement.setTimestamp(1, Timestamp.valueOf(job.getBeginWork().atStartOfDay()));
-            statement.setString(2, job.getPosition());
-            statement.setTimestamp(3, Timestamp.valueOf(job.getEndWork().atStartOfDay()));
+            statement.setString(2,job.getJobCompany());
+            statement.setString(3,job.getSkill());
+            statement.setString(4, job.getPosition());
+            statement.setTimestamp(5, Timestamp.valueOf(job.getEndWork().atStartOfDay()));
             if (job.getId() != null) {
-                statement.setLong(4, job.getId());
+                statement.setLong(6, job.getId());
             }
 
             ResultSet resultSet = statement.executeQuery();
