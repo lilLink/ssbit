@@ -1,25 +1,24 @@
 package com.lillink.parsefourtype.controller;
 
-import com.lillink.parsefourtype.dao.AddressDao;
-import com.lillink.parsefourtype.dao.PersonDao;
-import com.lillink.parsefourtype.model.Address;
-import com.lillink.parsefourtype.model.Person;
+import com.lillink.parsefourtype.service.dao.PersonService;
+import com.lillink.parsefourtype.utility.HtmlMappingUtil;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
+@WebServlet(urlPatterns = "/person")
 public class PersonServlet extends HttpServlet {
-    private PersonDao baseDao = new PersonDao();
+    private PersonService personService = new PersonService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Person> personList = baseDao.findAll();
+        String addressesHtmlString = HtmlMappingUtil.mapPersonToTable(personService.getAll());
 
-        req.setAttribute("person", personList);
+        req.setAttribute("person", addressesHtmlString);
         req.getRequestDispatcher("/WEB-INF/person.jsp").forward(req, resp);
     }
 }

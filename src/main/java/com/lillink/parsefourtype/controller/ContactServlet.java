@@ -16,7 +16,7 @@ public class ContactServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String addressesHtmlString = HtmlMappingUtil.mapContactToTable(contactService.getAll());
+        String addressesHtmlString = HtmlMappingUtil.mapContactToTable(contactService.getAll());
 
         req.setAttribute("contacts", addressesHtmlString);
         req.getRequestDispatcher("/WEB-INF/contacts.jsp").forward(req, resp);

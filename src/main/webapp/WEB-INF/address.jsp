@@ -1,34 +1,25 @@
-<%@ page import="com.lillink.parsefourtype.model.Address" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-
-
 <head>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Address</title>
-
+</head>
+<body>
     <section>
-        <h3>Address info</h3>
-        <table border="1" cellpadding="10" cellspacing="0">
-            <td>ID</td>
-            <td>Country</td>
-            <td>City</td>
-            <td>Street</td>
-                <%for(Address address : (List<Address>)request.getAttribute("address")) {
-                String str = "<tr>";
+    <h3>Contacts info</h3>
+    <table border="1" cellpadding="10" cellspacing="0" class="table" style="width: 50%; height: 10%">
+        <thead>
+        <th class="col" style="width: 20%">ID</th>
+        <th class="col" style="width: 25%">Country</th>
+        <th class="col" style="width: 25%">City</th>
+        <th class="col" style="width: 30%">Street</th>
+        </thead>
+        <tbody>
+        <%= request.getAttribute("address").toString() %>
+        </tbody>
 
-                str += "<td>" + address.getId() + "</td>";
-                str += "<td>" + address.getCountry() + "</td>";
-                str += "<td>" + address.getCity() + "</td>";
-                str += "<td>" + address.getStreet() + "</td>";
-
-                str += "</tr>";
-                out.println(str);
-                }%>
-
-        </table>
+    </table>
     </section>
     <li><a href="/">Back</a></li>
-</head>
+</body>
 </html>

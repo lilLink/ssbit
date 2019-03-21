@@ -3,10 +3,7 @@ package com.lillink.parsefourtype.dao;
 import com.lillink.parsefourtype.model.Person;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +14,8 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class PersonDao extends DBConnection implements BaseDao<Person> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM person";
-    public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ?, skills = ? WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date,skills) VALUES (?,?,?,?) RETURNING id";
+    public static final String UPDATE_ALL_QUERY = "UPDATE person SET first_name = ?, last_name = ?, birth_date = ? WHERE id = ?";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO person (first_name,last_name,birth_date) VALUES (?,?,?) RETURNING id";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM person WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM person WHERE id = ?";
 
@@ -38,7 +35,6 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
                 person.setFirstName(set.getString("first_name"));
                 person.setLastName(set.getString("last_name"));
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
-               // person.setSkills(set.getArray("skills"));
             }
             LOGGER.trace("Person {} found by id is successfully", id);
         }catch (SQLException e){
@@ -61,7 +57,6 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
                 person.setFirstName(set.getString("first_name"));
                 person.setLastName(set.getString("last_name"));
                 person.setBirthDate(LocalDate.parse(set.getDate("birth_date").toString()));
-               // person.setSkills(set.getString("skills"));
 
                 resultList.add(person);
             }
@@ -82,11 +77,10 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
 
             statement.setString(1, person.getFirstName());
             statement.setString(2,person.getLastName());
-            statement.setString(3,person.getBirthDate().toString());
-            //statement.setString(4,person.getSkills());
+            statement.setDate(3, Date.valueOf(person.getBirthDate()));
 
             if (person.getId() != null) {
-                statement.setLong(5, person.getId());
+                statement.setLong(4, person.getId());
             }
 
             ResultSet resultSet = statement.executeQuery();

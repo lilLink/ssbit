@@ -3,6 +3,7 @@ package com.lillink.parsefourtype.utility;
 import com.lillink.parsefourtype.model.Address;
 import com.lillink.parsefourtype.model.Contact;
 import com.lillink.parsefourtype.model.Job;
+import com.lillink.parsefourtype.model.Person;
 
 import java.util.List;
 
@@ -59,4 +60,22 @@ public class HtmlMappingUtil {
         addresses.forEach(x -> result.append(mapAddressToTable(x)));
         return result.toString();
     }
+
+    public static String mapPersonToTable(Person person){
+        StringBuilder result = new StringBuilder();
+        result.append("<tr>")
+                .append("<td>").append(person.getId()).append("</td>")
+                .append("<td>").append(person.getFirstName()).append("</td>")
+                .append("<td>").append(person.getLastName()).append("</td>")
+                .append("<td>").append(person.getBirthDate()).append("</td>")
+                .append("</tr>");
+        return result.toString();
+    }
+
+    public static String mapPersonToTable(List<Person> people){
+        StringBuilder result = new StringBuilder();
+        people.forEach(x -> result.append(mapPersonToTable(x)));
+        return result.toString();
+    }
+
 }
