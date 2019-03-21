@@ -37,8 +37,8 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
                 job.setSkill(set.getString("skill"));
                 job.setPosition(set.getString("position"));
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
-                LOGGER.trace("Job {} found by id successfully ", id);
             }
+            LOGGER.trace("Job {} found by id successfully ", id);
         }catch (SQLException e){
             LOGGER.warn("Job {} wasn't found in database ", id, e);
         }
@@ -67,7 +67,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
             }
             LOGGER.trace("Job found all successfully ");
         } catch (SQLException e) {
-            LOGGER.warn("Job {} wasn't found in database ", e);
+            LOGGER.warn("Job wasn't found in database ", e);
         }
 
         return resultList;
