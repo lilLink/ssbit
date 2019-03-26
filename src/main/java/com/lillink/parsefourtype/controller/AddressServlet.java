@@ -1,5 +1,6 @@
 package com.lillink.parsefourtype.controller;
 
+import com.lillink.parsefourtype.model.Address;
 import com.lillink.parsefourtype.service.dao.AddressService;
 import com.lillink.parsefourtype.utility.HtmlMappingUtil;
 
@@ -16,9 +17,36 @@ public class AddressServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String addressesHtmlString = HtmlMappingUtil.mapAddressToTable(addressService.getAll());
+        if (req.getParameter("updateId") != null){
+            this.handleUpdate(req,resp);
+        }else {
+            String addressesHtmlString = HtmlMappingUtil.mapAddressToTable(addressService.getAll());
+            req.setAttribute("address", addressesHtmlString);
+            req.getRequestDispatcher("/WEB-INF/views/address.jsp").forward(req, resp);
+        }
+    }
 
-        req.setAttribute("address", addressesHtmlString);
-        req.getRequestDispatcher("/WEB-INF/address.jsp").forward(req,resp);
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long id = Long.parseLong(req.getParameter("id"));
+        Address address = addressService.getById(id);
+        address.setCountry(req.getParameter("country"));
+        address.setCity(req.getParameter("city"));
+        address.setStreet(req.getParameter("street"));
+        addressService.add(address);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        addressService.remove(Long.parseLong(req.getParameter("id")));
+    }
+
+    private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("updateId"));
+        Address address = addressService.getById(id);
+        String resultHtml = HtmlMappingUtil.mapAddressToUpdateForm(address);
+        req.setAttribute("address", resultHtml);
+
+        req.getRequestDispatcher("/WEB-INF/views/address_update.jsp").forward(req, resp);
     }
 }

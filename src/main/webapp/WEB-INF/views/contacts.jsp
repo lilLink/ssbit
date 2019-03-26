@@ -9,7 +9,6 @@
     <h3>Contacts info</h3>
     <table border="1" cellpadding="10" cellspacing="0" class="table" style="width: 50%; height: 10%">
         <thead>
-        <th class="col" style="width: 30%">ID</th>
         <th class="col" style="width: 45%">Email</th>
         <th class="col" style="width: 40%">Number</th>
         </thead>
@@ -19,6 +18,23 @@
 
      </table>
     </section>
-<li><a href="/">Back</a></li>
+    <li><a href="${pageContext.request.contextPath}/person?add=1">Add</a></li>
+    <li><a href="${pageContext.request.contextPath}/">Back</a></li>
+    <script type="text/javascript">
+        function handleDelete(clickedId)
+        {
+            var url = "http://localhost:8080/contacts?id=" + clickedId;
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", url, true);
+            xhr.onload = function () {
+                alert('Contact ' + clickedId + ' was successfully deleted');
+                document.location.reload();
+            };
+            xhr.send(null);
+        }
+        function handleUpdate(clickedId) {
+            window.location.href = "http://localhost:8080/contacts?updateId="+clickedId;
+        }
+    </script>
 </body>
 </html>

@@ -58,7 +58,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
                 job.setId(set.getLong("id"));
                 job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
-                job.setJobCompany(set.getString("skill"));
+                job.setJobCompany(set.getString("job_company"));
                 job.setSkill(set.getString("skill"));
                 job.setPosition(set.getString("position"));
                 job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
