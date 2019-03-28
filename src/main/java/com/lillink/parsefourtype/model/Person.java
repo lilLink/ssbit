@@ -44,9 +44,9 @@ public class Person {
     }
 
     public Person(){
-        job = new ArrayList<>();
-        contacts = new ArrayList<>();
-        address = new Address();
+        this.job = new ArrayList<>();
+        this.contacts = new ArrayList<>();
+        this.address = new Address();
     }
 
     @Override

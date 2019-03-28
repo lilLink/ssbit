@@ -63,9 +63,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="phone">Phone number</label>
+                    <label class="col-sm-2 col-form-label" for="number">Phone number</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="text" id="phone" name="phone" required value="${contacts.getNumber()}">
+                        <input class="form-control" type="text" id="number" name="number" required value="${contacts.getNumber()}">
                     </div>
                 </div>
                 </c:forEach>

@@ -70,21 +70,26 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
     @Override
     public Long save(Person person, Long personId) {
         Long savedId = null;
+        String actionQuery;
         try {
-            String actionQuery = (person.getId() == null) ? INSERT_ALL_QUERY
-                    : UPDATE_ALL_QUERY;
+            if (person.getId() == null || person.getId() == 0) {
+                actionQuery = INSERT_ALL_QUERY;
+            }else
+                actionQuery = UPDATE_ALL_QUERY;
+
             PreparedStatement statement = connection.prepareStatement(actionQuery);
 
             statement.setString(1, person.getFirstName());
             statement.setString(2,person.getLastName());
             statement.setDate(3, Date.valueOf(person.getBirthDate()));
 
-            if (person.getId() != null) {
+            if (person.getId() != null && person.getId() != 0) {
                 statement.setLong(4, person.getId());
             }
 
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
+            if (person.getId() != 0)
             savedId = resultSet.getLong("id");
             LOGGER.trace("Person {} entered all in database", person);
         }catch (SQLException e){

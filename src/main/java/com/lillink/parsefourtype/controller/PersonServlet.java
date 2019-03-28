@@ -42,7 +42,7 @@ public class PersonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
         Person person = new Person();
 
-        person.setId(Long.parseLong(req.getParameter("id")));
+        person.setId(Long.valueOf(req.getParameter("id")));
         person.setFirstName(req.getParameter("first"));
         person.setLastName(req.getParameter("last"));
         person.setBirthDate(LocalDate.parse(req.getParameter("date")));
@@ -53,6 +53,7 @@ public class PersonServlet extends HttpServlet {
         address.setCity(req.getParameter("city"));
         address.setStreet(req.getParameter("street"));
 
+        person.setAddress(address);
 
         String[] email = req.getParameterValues("email");
         String[] number = req.getParameterValues("number");
@@ -87,24 +88,22 @@ public class PersonServlet extends HttpServlet {
                 person.getJob().add(job);
             }
         }
-        System.out.println(person);
+
+        personService.save(person,null);
 
         List<Person> all = personService.getAll();
         all.sort(Comparator.comparing(Person::getId).reversed());
+        addressService.save(address, all.get(0).getId());
         for(Job job : person.getJob()) {
             jobService.save(job, all.get(0).getId());
         }
         for (Contact contact : person.getContacts()){
             contactService.save(contact, all.get(0).getId());
-            addressService.save(address, all.get(0).getId());
         }
-        personService.save(person,null);
-
-        resp.sendRedirect("/person");
 
         req.setAttribute("person", person);
         req.setAttribute("contacts", person.getContacts());
-        req.setAttribute("address", address);
+        req.setAttribute("address", person.getAddress());
         req.setAttribute("job", person.getJob());
 
         req.getRequestDispatcher("/WEB-INF/views/person_add.jsp").forward(req, resp);
