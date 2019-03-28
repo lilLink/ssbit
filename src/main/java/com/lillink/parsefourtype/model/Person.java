@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,7 +27,7 @@ public class Person {
     private LocalDate birthDate;
     @XmlElement
     @XmlElementWrapper
-    private List<Job> jobs;
+    private List<Job> job;
     @XmlElement
     private Address address;
     @XmlElement
@@ -42,7 +43,11 @@ public class Person {
         this.birthDate = LocalDate.parse(birthDate);
     }
 
-    public Person(){}
+    public Person(){
+        job = new ArrayList<>();
+        contacts = new ArrayList<>();
+        address = new Address();
+    }
 
     @Override
     public String toString() {
@@ -51,7 +56,7 @@ public class Person {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
-                ", jobs=" + jobs +
+                ", job=" + job +
                 ", address=" + address +
                 ", contacts=" + contacts +
                 '}';

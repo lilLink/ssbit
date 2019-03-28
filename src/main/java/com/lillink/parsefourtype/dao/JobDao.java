@@ -15,7 +15,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
     public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, job_company = ?, skill = ?, position = ?, end_work = ? WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,job_company,skill,position,end_work) VALUES (?,?,?,?,?) RETURNING id";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,job_company,skill,position,end_work,person) VALUES (?,?,?,?,?,?) RETURNING id";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
@@ -74,7 +74,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
     }
 
     @Override
-    public Long save(Job job) {
+    public Long save(Job job ,Long personId) {
         Long savedId = null;
         try {
             String actionQuery = (job.getId() == null) ? INSERT_ALL_QUERY
@@ -86,6 +86,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
             statement.setString(3,job.getSkill());
             statement.setString(4, job.getPosition());
             statement.setTimestamp(5, Timestamp.valueOf(job.getEndWork().atStartOfDay()));
+            statement.setLong(6, personId);
             if (job.getId() != null) {
                 statement.setLong(6, job.getId());
             }

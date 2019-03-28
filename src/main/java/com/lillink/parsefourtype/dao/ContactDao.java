@@ -18,7 +18,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     public static final String FIND_ALL_QUERY = "SELECT * FROM contacts";
     public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number) VALUES (?,?) RETURNING id";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number,person) VALUES (?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 
     public static final Logger LOGGER = getLogger();
@@ -68,7 +68,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
     }
 
     @Override
-    public Long save(Contact contact) {
+    public Long save(Contact contact, Long personId) {
         Long savedId = null;
         try {
             String actionQuery = (contact.getId() == null) ? INSERT_ALL_QUERY
@@ -77,7 +77,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
             statement.setString(1,contact.getEmail());
             statement.setString(2,contact.getNumber());
-
+            statement.setLong(3,personId);
             if (contact.getId() != null) {
                 statement.setLong(3, contact.getId());
             }

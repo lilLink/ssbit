@@ -18,7 +18,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
     public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
     public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?;";
-    public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street) VALUES (?,?,?) RETURNING id";
+    public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street,person) VALUES (?,?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
     public static final Logger LOGGER = getLogger();
@@ -70,7 +70,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
     }
 
     @Override
-    public Long save(Address address) {
+    public Long save(Address address, Long personId) {
         Long savedId = null;
         try {
             String actionQuery = (address.getId() == null) ? INSERT_ALL_QUERY
@@ -81,6 +81,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
             statement.setString(1,address.getCountry());
             statement.setString(2,address.getCity());
             statement.setString(3,address.getStreet());
+            statement.setLong(4,personId);
 
             if (address.getId() != null) {
                 statement.setLong(4, address.getId());

@@ -33,12 +33,12 @@ public class AddressServlet extends HttpServlet{
         address.setCountry(req.getParameter("country"));
         address.setCity(req.getParameter("city"));
         address.setStreet(req.getParameter("street"));
-        addressService.add(address);
+        addressService.save(address, null);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        addressService.remove(Long.parseLong(req.getParameter("id")));
+        addressService.delete(Long.parseLong(req.getParameter("id")));
     }
 
     private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -14,7 +14,7 @@ public class AddressService implements Service<Address> {
     }
 
     @Override
-    public void remove(Long id){
+    public void delete(Long id){
         addressDao.delete(id);
     }
 
@@ -24,7 +24,7 @@ public class AddressService implements Service<Address> {
     }
 
     @Override
-    public Long add(Address address){
-        return addressDao.save(address);
+    public Long save(Address address, Long personId){
+        return addressDao.save(address,personId);
     }
 }

@@ -19,7 +19,6 @@
 
     </table>
     </section>
-    <li><a href="${pageContext.request.contextPath}/person?add=1">Add</a></li>
     <li><a href="${pageContext.request.contextPath}/">Back</a></li>
     <script type="text/javascript">
         function handleDelete(clickedId)

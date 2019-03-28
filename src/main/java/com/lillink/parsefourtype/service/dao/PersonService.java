@@ -14,7 +14,7 @@ public class PersonService implements Service<Person> {
     }
 
     @Override
-    public void remove(Long id){
+    public void delete(Long id){
         personDao.delete(id);
     }
 
@@ -24,7 +24,7 @@ public class PersonService implements Service<Person> {
     }
 
     @Override
-    public Long add(Person person){
-        return personDao.save(person);
+    public Long save(Person person, Long personId){
+        return personDao.save(person,null);
     }
 }

@@ -32,12 +32,12 @@ public class ContactServlet extends HttpServlet {
         Contact contact = contactService.getById(id);
         contact.setEmail(req.getParameter("email"));
         contact.setNumber(req.getParameter("number"));
-        contactService.add(contact);
+        contactService.save(contact,null);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        contactService.remove(Long.parseLong(req.getParameter("id")));
+        contactService.delete(Long.parseLong(req.getParameter("id")));
     }
 
     private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

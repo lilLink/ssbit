@@ -6,10 +6,10 @@ public interface Service<T> {
 
     List<T> getAll();
 
-    void remove(Long id);
+    void delete(Long id);
 
     T getById(Long id);
 
-    Long add(T name);
+    Long save(T name,Long personId);
 
 }

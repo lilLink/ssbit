@@ -14,7 +14,7 @@ public class ContactService implements Service<Contact> {
     }
 
     @Override
-    public void remove(Long id){
+    public void delete(Long id){
         contactDao.delete(id);
     }
 
@@ -23,8 +23,7 @@ public class ContactService implements Service<Contact> {
         return contactDao.findById(id);
     }
 
-    @Override
-    public Long add(Contact contact){
-        return contactDao.save(contact);
+    public Long save(Contact contact, Long personId){
+        return contactDao.save(contact,personId);
     }
 }

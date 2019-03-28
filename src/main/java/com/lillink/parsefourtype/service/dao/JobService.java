@@ -14,7 +14,7 @@ public class JobService implements Service<Job> {
     }
 
     @Override
-    public void remove(Long id){
+    public void delete(Long id){
         jobDao.delete(id);
     }
 
@@ -23,7 +23,7 @@ public class JobService implements Service<Job> {
         return jobDao.findById(id);
     }
 
-    public Long add(Job job){
-        return jobDao.save(job);
+    public Long save(Job job, Long personId){
+        return jobDao.save(job,personId);
     }
 }

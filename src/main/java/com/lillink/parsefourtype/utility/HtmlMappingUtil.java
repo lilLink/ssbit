@@ -107,6 +107,6 @@ public class HtmlMappingUtil {
                         .append(" Position: ").append(job.getPosition()).append(" New: <input id='position_").append(job.getId()).append("'>").append("<hr>")
                         .append(" End Work: ").append(job.getEndWork()).append(" New: <input type='date' id='end_").append(job.getId()).append("'>").append("<hr>")
                         .append(" <button onClick = handleUpdate(").append(job.getId()).append(")>Save</button>").append("<hr>");
-                return result.toString();
+        return result.toString();
     }
 }

@@ -68,7 +68,7 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
     }
 
     @Override
-    public Long save(Person person) {
+    public Long save(Person person, Long personId) {
         Long savedId = null;
         try {
             String actionQuery = (person.getId() == null) ? INSERT_ALL_QUERY

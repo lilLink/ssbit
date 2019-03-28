@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/person")
 public class PersonServlet extends HttpServlet {
@@ -37,37 +39,81 @@ public class PersonServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
         Person person = new Person();
-        person.setFirstName(req.getParameter("inputFirstName4"));
-        person.setLastName(req.getParameter("inputLastName4"));
-        person.setBirthDate(LocalDate.parse(req.getParameter("inputBirthDate4")));
-        personService.add(person);
 
-        Contact contact = new Contact();
-        contact.setEmail(req.getParameter("inputEmail4"));
-        contact.setNumber(req.getParameter("inputNumber4"));
-        contactService.add(contact);
+        person.setId(Long.parseLong(req.getParameter("id")));
+        person.setFirstName(req.getParameter("first"));
+        person.setLastName(req.getParameter("last"));
+        person.setBirthDate(LocalDate.parse(req.getParameter("date")));
 
         Address address = new Address();
-        address.setCountry(req.getParameter("inputCountry4"));
-        address.setCity(req.getParameter("inputCity4"));
-        address.setStreet(req.getParameter("inputStreet4"));
-        addressService.add(address);
 
-        Job job = new Job();
-        job.setBeginWork(LocalDate.parse(req.getParameter("inputBeginWork4")));
-        job.setJobCompany(req.getParameter("inputJobCompany4"));
-        job.setSkill(req.getParameter("inputSkill4"));
-        job.setPosition(req.getParameter("inputPosition4"));
-        job.setEndWork(LocalDate.parse(req.getParameter("inputEndWork4")));
-        jobService.add(job);
+        address.setCountry(req.getParameter("country"));
+        address.setCity(req.getParameter("city"));
+        address.setStreet(req.getParameter("street"));
+
+
+        String[] email = req.getParameterValues("email");
+        String[] number = req.getParameterValues("number");
+        if (email != null){
+            for (int i = 0; i < email.length; i++) {
+                Contact contact = new Contact();
+
+                contact.setEmail(email[i]);
+                contact.setNumber(number[i]);
+
+                person.getContacts().add(contact);
+            }
+        }
+
+
+        String[] begin = req.getParameterValues("begin");
+        String[] end = req.getParameterValues("end");
+        String[] company = req.getParameterValues("company");
+        String[] position = req.getParameterValues("position");
+        String[] skill = req.getParameterValues("skill");
+
+        if (begin != null){
+            for (int i = 0; i < begin.length; i++){
+                Job job = new Job();
+
+                job.setBeginWork(LocalDate.parse(begin[i]));
+                job.setJobCompany(company[i]);
+                job.setSkill(skill[i]);
+                job.setPosition(position[i]);
+                job.setEndWork(LocalDate.parse(end[i]));
+
+                person.getJob().add(job);
+            }
+        }
+        System.out.println(person);
+
+        List<Person> all = personService.getAll();
+        all.sort(Comparator.comparing(Person::getId).reversed());
+        for(Job job : person.getJob()) {
+            jobService.save(job, all.get(0).getId());
+        }
+        for (Contact contact : person.getContacts()){
+            contactService.save(contact, all.get(0).getId());
+            addressService.save(address, all.get(0).getId());
+        }
+        personService.save(person,null);
 
         resp.sendRedirect("/person");
+
+        req.setAttribute("person", person);
+        req.setAttribute("contacts", person.getContacts());
+        req.setAttribute("address", address);
+        req.setAttribute("job", person.getJob());
+
+        req.getRequestDispatcher("/WEB-INF/views/person_add.jsp").forward(req, resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        personService.remove(Long.parseLong(req.getParameter("id")));
+        personService.delete(Long.parseLong(req.getParameter("id")));
     }
+
+
 }

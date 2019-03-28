@@ -36,12 +36,12 @@ public class JobServlet extends HttpServlet {
         job.setSkill(req.getParameter("skill"));
         job.setPosition(req.getParameter("position"));
         job.setEndWork(LocalDate.parse(req.getParameter("end")));
-        jobService.add(job);
+        jobService.save(job,null);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        jobService.remove(Long.parseLong(req.getParameter("id")));
+        jobService.delete(Long.parseLong(req.getParameter("id")));
     }
 
     private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
