@@ -70,8 +70,8 @@ public class HtmlMappingUtil {
                 .append("<td>").append(person.getFirstName()).append("</td>")
                 .append("<td>").append(person.getLastName()).append("</td>")
                 .append("<td>").append(person.getBirthDate()).append("</td>")
-                .append("<td><button onClick = handleUpdate(").append(person.getId()).append(")>Update</button></td>")
-                .append("<td><button onClick = handleDelete(").append(person.getId()).append(")>Delete</button></td>")
+                .append("<td><a href = '").append("person_all?id=").append(person.getId()).append("'").append(" class = 'btn btn-success'> Get More Info </a></td>")
+                .append("<td><button onClick = handleDelete(").append(person.getId()).append(">Delete</button></td>")
                 .append("</tr>");
         return result.toString();
     }

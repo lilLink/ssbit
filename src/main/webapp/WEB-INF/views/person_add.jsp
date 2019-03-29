@@ -9,7 +9,7 @@
     <title>Add Person</title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/person" method="post">
+    <form action="${pageContext.request.contextPath}/person?action=submit" method="post">
             <div id="inputTable" class="form-group">
                 <% Person person = (Person)request.getAttribute("person"); %>
                 <input type="hidden" id="id" name="id" value="${person != null ? person.getId() : 0}">
