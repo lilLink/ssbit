@@ -22,7 +22,7 @@
     <script type="text/javascript">
         function handleDelete(clickedId)
         {
-            var url = "http://localhost:8080/ch082-ch-082-37861ce78155/contacts?id=" + clickedId;
+            var url = "http://localhost:8080/parser-resume/contacts?id=" + clickedId;
             var xhr = new XMLHttpRequest();
             xhr.open("DELETE", url, true);
             xhr.onload = function () {
@@ -32,7 +32,7 @@
             xhr.send(null);
         }
         function handleUpdate(clickedId) {
-            window.location.href = "http://localhost:8080/ch082-ch-082-37861ce78155/contacts?updateId="+clickedId;
+            window.location.href = "http://localhost:8080/parser-resume/contacts?updateId="+clickedId;
         }
     </script>
 </body>

@@ -171,11 +171,11 @@
         <div class="row">
             <div class="form-actions floatLeft">
                 <input type="submit" value="Convert to pdf" class="btn btn-success custom-width"/>
-                <a href="<c:url value='/ch082-ch-082-37861ce78155/convertToYaml?id=${person.id}' />"
+                <a href="<c:url value='/convertToYaml?id=${person.id}' />"
                    class="btn btn-success custom-width">Convert to Yaml</a>
             </div>
             <div class="form-actions floatRight">
-                <a href="<c:url value='/ch082-ch-082-37861ce78155/person' />" class="btn btn-success custom-width">Go Back</a>
+                <a href="<c:url value='/person' />" class="btn btn-success custom-width">Go Back</a>
             </div>
         </div>
     </form>

@@ -21,11 +21,11 @@
 
     </table>
 </section>
-    <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/">Back</a></li>
+    <li><a href="${pageContext.request.contextPath}/parser-resume/">Back</a></li>
 <script type="text/javascript">
     function handleDelete(clickedId)
     {
-        var url = "http://localhost:8080/ch082-ch-082-37861ce78155/job?id=" + clickedId;
+        var url = "http://localhost:8080/parser-resume/job?id=" + clickedId;
         var xhr = new XMLHttpRequest();
         xhr.open("DELETE", url, true);
         xhr.onload = function () {
@@ -35,7 +35,7 @@
         xhr.send(null);
     }
     function handleUpdate(clickedId) {
-        window.location.href = "http://localhost:8080/ch082-ch-082-37861ce78155/job?updateId="+clickedId;
+        window.location.href = "http://localhost:8080/parser-resume/job?updateId="+clickedId;
     }
 </script>
 </body>

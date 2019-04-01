@@ -8,17 +8,10 @@
 </head>
     <body>
         <div class="wrapper">
-            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/person">Persons</a></li>
-            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/address">Address</a></li>
-            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/contacts">Contacts</a></li>
-            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/job">Jobs</a></li>
-        </div>
-        <div class="details">
-            <label class="txt"> Upload cv: </label><br>
-            <form action="${pageContext.request.contextPath}/uploadFile" method="post" enctype="multipart/form-data">
-                <div style="text-align: center;"><input class="btn btn-success custom-width4" name="data" type="file" value="Chose file" accept=".json, .xml, .txt" ></div>
-                <input class="btn btn-success custom-width" type="submit" value="Upload"> <br>
-            </form>
+            <li><a href="${pageContext.request.contextPath}/parser-resume/person">Persons</a></li>
+            <li><a href="${pageContext.request.contextPath}/parser-resume/address">Address</a></li>
+            <li><a href="${pageContext.request.contextPath}/parser-resume/contacts">Contacts</a></li>
+            <li><a href="${pageContext.request.contextPath}/parser-resume/job">Jobs</a></li>
         </div>
 </body>
 </html>

@@ -35,12 +35,14 @@ public class XmlCompanyTest {
         job.setBeginWork(LocalDate.parse("2019-03-04"));
         job.setPosition("Student");
         job.setEndWork(LocalDate.parse("2019-06-04"));
+        jobList.add(job);
         person.setJob(jobList);
 
         List<Contact> contactList = new ArrayList<>();
         Contact contact = new Contact();
         contact.setEmail("lillinkwrk@gmail.com");
         contact.setNumber("+38 095 464 46 95");
+        contactList.add(contact);
         person.setContacts(contactList);
 
         personList.add(person);

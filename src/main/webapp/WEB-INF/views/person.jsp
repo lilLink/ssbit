@@ -19,14 +19,14 @@
 
     </table>
 </section>
-<li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/person?add=1">Add</a></li>
-<li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/">Back</a></li>
+<li><a href="${pageContext.request.contextPath}/parser-resume/person?add=1">Add</a></li>
+<li><a href="${pageContext.request.contextPath}/parser-resume/">Back</a></li>
 </body>
 
 <script type="text/javascript">
     function handleDelete(clickedId)
     {
-        var url = "http://localhost:8080/ch082-ch-082-37861ce78155/person?id=" + clickedId;
+        var url = "http://localhost:8080/parser-resume/person?id=" + clickedId;
         var xhr = new XMLHttpRequest();
         xhr.open("DELETE", url, true);
         xhr.onload = function () {
