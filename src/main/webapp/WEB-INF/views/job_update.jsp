@@ -9,7 +9,7 @@
 </body>
 <script type="text/javascript">
     function handleUpdate(clickedId) {
-        var url = new URL("http://localhost:8080/job?id=" + clickedId);
+        var url = new URL("http://localhost:8080/ch082-ch-082-37861ce78155/job?id=" + clickedId);
         url.searchParams.append("begin", document.getElementById("begin_"+clickedId).value);
         url.searchParams.append("company", document.getElementById("company_"+clickedId).value);
         url.searchParams.append("skill", document.getElementById("skill_"+clickedId).value);

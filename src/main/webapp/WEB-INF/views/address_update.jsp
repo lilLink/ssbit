@@ -9,7 +9,7 @@
 </body>
 <script type="text/javascript">
     function handleUpdate(clickedId) {
-        var url = new URL("http://localhost:8080/address?id=" + clickedId);
+        var url = new URL("http://localhost:8080/ch082-ch-082-37861ce78155/address?id=" + clickedId);
         url.searchParams.append("country", document.getElementById("country_"+clickedId).value);
         url.searchParams.append("city", document.getElementById("city_"+clickedId).value);
         url.searchParams.append("street", document.getElementById("street_"+clickedId).value);

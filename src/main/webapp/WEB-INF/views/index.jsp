@@ -8,10 +8,10 @@
 </head>
     <body>
         <div class="wrapper">
-            <li><a href="${pageContext.request.contextPath}/person">Persons</a></li>
-            <li><a href="${pageContext.request.contextPath}/address">Address</a></li>
-            <li><a href="${pageContext.request.contextPath}/contacts">Contacts</a></li>
-            <li><a href="${pageContext.request.contextPath}/job">Jobs</a></li>
+            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/person">Persons</a></li>
+            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/address">Address</a></li>
+            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/contacts">Contacts</a></li>
+            <li><a href="${pageContext.request.contextPath}/ch082-ch-082-37861ce78155/job">Jobs</a></li>
         </div>
         <div class="details">
             <label class="txt"> Upload cv: </label><br>

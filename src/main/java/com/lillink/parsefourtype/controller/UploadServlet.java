@@ -82,7 +82,7 @@ public class UploadServlet extends HttpServlet {
 
                             }
 
-                            resp.sendRedirect("/changePerson?id=" + person.getId());
+                            resp.sendRedirect("/ch082-ch-082-37861ce78155/changePerson?id=" + person.getId());
 
                             file.deleteOnExit();
 
