@@ -104,16 +104,6 @@ public class PersonServlet extends HttpServlet {
             contactService.save(contact, all.get(0).getId());
         }
 
-        String action = req.getParameter("action");
-
-        if ("submit".equals(action)) {
-            resp.setContentType("application/pdf;charset=UTF-8");
-            resp.addHeader("Content-Disposition", "inline; filename=" + "person.pdf");
-            ServletOutputStream out = resp.getOutputStream();
-            ByteArrayOutputStream baos = PdfCompanyWriter.getPdfFile(person);
-            baos.writeTo(out);
-        }
-
         req.setAttribute("person", person);
         req.setAttribute("contacts", person.getContacts());
         req.setAttribute("address", person.getAddress());

@@ -17,7 +17,7 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contacts";
     public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE person = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number,person) VALUES (?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 

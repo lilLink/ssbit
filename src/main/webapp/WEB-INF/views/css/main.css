@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+
+.autho__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.autho__caption {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.autho__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.autho__input {
+    width: 100%;
+    padding: 5px 15px;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #D3D3D3;
+    font-size: 17px;
+}
+
+.autho__input--login {
+    margin-bottom: 10px;
+}
+
+.autho__btn-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.autho__btn {
+    width: 100%;
+    padding: 5px;
+    background: #32CD32;
+    border-radius: 3px;
+    border: 0;
+    font-size: 17px;
+    color: #fff;
+}
+
+.autho__btn--login {
+    margin-bottom: 10px;
+}

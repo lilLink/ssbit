@@ -16,7 +16,7 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
     public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, job_company = ?, skill = ?, position = ?, end_work = ? WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,job_company,skill,position,end_work,person) VALUES (?,?,?,?,?,?) RETURNING id";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE person = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
     private static final Logger LOGGER = getLogger();

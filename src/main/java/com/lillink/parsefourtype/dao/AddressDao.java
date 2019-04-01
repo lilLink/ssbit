@@ -17,7 +17,7 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?;";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE person = ?;";
     public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street,person) VALUES (?,?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
