@@ -17,7 +17,7 @@ public class JsonCompanyTest {
     public void serializeTest(){
 
         String path = "F:\\IDEA Projects\\ParserFourType\\src\\main\\resources\\resume.json";
-        Writer<Company> writer = new JsonCompanyWriter(path);
+        Writer<Person> writer = new JsonCompanyWriter(path);
 
         List<Person> personList = new ArrayList<Person>();
         Person person = new Person();
@@ -34,25 +34,27 @@ public class JsonCompanyTest {
         List<Job> jobList = new ArrayList<>();
         Job job = new Job();
         job.setBeginWork(LocalDate.parse("2019-03-04"));
+        job.setJobCompany("SS");
         job.setPosition("Student");
+        job.setSkill("Python");
         job.setEndWork(LocalDate.parse("2019-06-04"));
-        person.setJobs(jobList);
+        jobList.add(job);
+        person.setJob(jobList);
 
         List<Contact> contactList = new ArrayList<>();
         Contact contact = new Contact();
         contact.setEmail("lillinkwrk@gmail.com");
         contact.setNumber("+38 095 464 46 95");
+        contactList.add(contact);
         person.setContacts(contactList);
 
         personList.add(person);
-        Company company = new  Company();
-        company.setNameCompany("SoftServe");
-        company.setPersonList(personList);
-        writer.write(company);
+        writer.write(person);
 
-        Parser<Company> parser = new JsonCompanyParser(path);
-        Company company1 = parser.parse().orElseThrow(RuntimeException::new);
+        Parser<Person> parser = new JsonCompanyParser(path);
+        Person company1 = parser.parse().orElseThrow(RuntimeException::new);
 
-        Assert.assertEquals(company.toString().trim(),company1.toString().trim());
+        System.out.println(company1);
+        Assert.assertEquals(person.toString().trim(),company1.toString().trim());
     }
 }

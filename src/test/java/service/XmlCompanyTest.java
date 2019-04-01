@@ -16,7 +16,7 @@ public class XmlCompanyTest {
     @Test
     public void serializeTest(){
         String path = "F:\\IDEA Projects\\ParserFourType\\src\\main\\resources\\resume.xml";
-        Writer<Company> writer = new XmlCompanyWriter(path);
+        Writer<Person> writer = new XmlCompanyWriter(path);
 
         List<Person> personList = new ArrayList<Person>();
         Person person = new Person();
@@ -35,7 +35,7 @@ public class XmlCompanyTest {
         job.setBeginWork(LocalDate.parse("2019-03-04"));
         job.setPosition("Student");
         job.setEndWork(LocalDate.parse("2019-06-04"));
-        person.setJobs(jobList);
+        person.setJob(jobList);
 
         List<Contact> contactList = new ArrayList<>();
         Contact contact = new Contact();
@@ -47,18 +47,12 @@ public class XmlCompanyTest {
         Company company = new  Company();
         company.setNameCompany("SoftServe");
         company.setPersonList(personList);
-        writer.write(company);
+        writer.write(person);
 
-        Parser<Company> parser = new XmlCompanyParser(path);
-        Company company1 = parser.parse().orElseThrow(RuntimeException::new);
+        Parser<Person> parser = new XmlCompanyParser(path);
+        Person company1 = parser.parse().orElseThrow(RuntimeException::new);
 
         Assert.assertEquals(company.toString().trim(),company1.toString().trim());
     }
 
-    public void deserializeTest(){
-        String path = "resume.xml";
-        Parser<Company> parser = new XmlCompanyParser(path);
-        Company company = parser.parse().orElseThrow(RuntimeException::new);
-        System.out.println(company);
-    }
 }

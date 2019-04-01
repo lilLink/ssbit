@@ -23,7 +23,7 @@ public class PersonDaoTest {
         person1.setLastName("Ptitsyn");
         person1.setBirthDate(LocalDate.parse("2000-08-07"));
 
-        personDao.save(person1);
+        personDao.save(person1,null);
 
         Person person2 = new Person();
         person2.setId(2L);
@@ -31,7 +31,7 @@ public class PersonDaoTest {
         person2.setLastName("Ptitsyn");
         person2.setBirthDate(LocalDate.parse("2000-08-07"));
 
-        personDao.save(person2);
+        personDao.save(person2,null);
 
     }
 
@@ -42,7 +42,7 @@ public class PersonDaoTest {
         person1.setLastName("Ptitsyn");
         person1.setBirthDate(LocalDate.parse("2000-08-07"));
 
-        Long savedId = personDao.save(person1);
+        Long savedId = personDao.save(person1,null);
 
         Assert.assertEquals(personDao.findById(savedId),person1);
     }

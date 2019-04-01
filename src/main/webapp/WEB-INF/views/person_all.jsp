@@ -53,7 +53,6 @@
                 </div>
             </div>
         </div>
-        <%--<c:forEach items="${contacts}" var="contacts">--%>
         <% Contact contacts = (Contact)request.getAttribute("contacts");%>
         <div class="row">
             <div class="form-group col-md-12">
@@ -80,7 +79,6 @@
                 </div>
             </div>
         </div>
-        <%--</c:forEach>--%>
         <% Address address = (Address)request.getAttribute("address");%>
         <div class="row">
             <div class="form-group col-md-12">
@@ -120,7 +118,6 @@
         </div>
         <div class=\"form-group\">Working places</div>
         <% Job job = (Job) request.getAttribute("jobs");%>
-        <%--<c:forEach items="${jobs}" var="job">--%>
             <div class="row">
                 <div class="form-group col-md-12">
                     <label class="col-md-3 control-lable" for="begin">Begin Work</label>
@@ -171,10 +168,11 @@
                     </div>
                 </div>
             </div>
-        <%--</c:forEach>--%>
         <div class="row">
             <div class="form-actions floatLeft">
                 <input type="submit" value="Convert to pdf" class="btn btn-success custom-width"/>
+                <a href="<c:url value='/convertToYaml?id=${person.id}' />"
+                   class="btn btn-success custom-width">Convert to Yaml</a>
             </div>
             <div class="form-actions floatRight">
                 <a href="<c:url value='person' />" class="btn btn-success custom-width">Go Back</a>

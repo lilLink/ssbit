@@ -20,7 +20,7 @@ public class YamlCompanyTest {
 
     @Test
     public void serializeTest() {
-        Writer<Company> writer = new YamlCompanyWriter(path);
+        Writer<Person> writer = new YamlCompanyWriter(path);
 
         List<Person> personList = new ArrayList<Person>();
         Person person = new Person();
@@ -33,7 +33,7 @@ public class YamlCompanyTest {
         job.setBeginWork(LocalDate.parse("2019-03-04"));
         job.setPosition("Student");
         job.setEndWork(LocalDate.parse("2019-06-04"));
-        person.setJobs(jobList);
+        person.setJob(jobList);
 
         List<Contact> contactList = new ArrayList<>();
         Contact contact = new Contact();
@@ -53,7 +53,7 @@ public class YamlCompanyTest {
         company.setNameCompany("SoftServe");
         company.setPersonList(personList);
 
-        writer.write(company);
+        writer.write(person);
 
         String path = "resume.yaml";
         Parser<Company> parser = new YamlCompanyParser(path);

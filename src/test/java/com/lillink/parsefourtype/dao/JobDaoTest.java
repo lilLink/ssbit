@@ -25,7 +25,7 @@ public class JobDaoTest {
         job1.setEndWork(beginWorkJob1.plusDays(5));
         job1.setPosition("Java dev");
 
-        jobDao.save(job1);
+        jobDao.save(job1,null);
 
         Job job2 = new Job();
         job2.setId(2L);
@@ -34,7 +34,7 @@ public class JobDaoTest {
         job2.setEndWork(beginWorkJob2.plusDays(5));
         job2.setPosition("Lol dev");
 
-        jobDao.save(job2);
+        jobDao.save(job2,null);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class JobDaoTest {
         job1.setEndWork(beginWorkJob1.plusDays(5));
         job1.setPosition("Java dev");
 
-        Long savedId = jobDao.save(job1);
+        Long savedId = jobDao.save(job1,null);
 
         Assert.assertEquals(jobDao.findById(savedId),job1);
     }

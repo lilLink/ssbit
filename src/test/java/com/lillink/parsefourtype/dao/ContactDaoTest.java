@@ -21,7 +21,7 @@ public class ContactDaoTest {
         contact1.setEmail("lillinkwrk@gmail.com");
         contact1.setNumber("+380 95 464 46 95");
         
-        contactDao.save(contact1);
+        contactDao.save(contact1,null);
 
         Contact contact2 = new Contact();
 
@@ -29,7 +29,7 @@ public class ContactDaoTest {
         contact2.setNumber("+380 95 464 46 95");
         contact2.setId(3L);
 
-        contactDao.save(contact2);
+        contactDao.save(contact2,null);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ContactDaoTest {
         contact1.setEmail("lillinkwrk@gmail.com");
         contact1.setNumber("+380 95 464 46 95");
 
-        Long savedId = contactDao.save(contact1);
+        Long savedId = contactDao.save(contact1,null);
 
         Assert.assertEquals(contactDao.findById(savedId), contact1);
     }

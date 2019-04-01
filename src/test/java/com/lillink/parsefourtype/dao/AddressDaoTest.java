@@ -21,7 +21,7 @@ public class AddressDaoTest {
         address1.setCity("Chernivtsi");
         address1.setStreet("Golovna 204");
 
-        addressDao.save(address1);
+        addressDao.save(address1,null);
 
         Address address2 = new Address();
         address2.setCountry("Ukraine");
@@ -29,7 +29,7 @@ public class AddressDaoTest {
         address2.setStreet("Bulvar 2");
         address2.setId(2L);
 
-        addressDao.save(address2);
+        addressDao.save(address2,null);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class AddressDaoTest {
         address1.setCity("Chernivtsi");
         address1.setStreet("Golovna 204");
 
-        Long savedId = addressDao.save(address1);
+        Long savedId = addressDao.save(address1,null);
 
         Assert.assertEquals(addressDao.findById(savedId), address1);
     }

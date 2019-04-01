@@ -59,13 +59,11 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job{" +
-                "beginWork=" + beginWork +
-                ", position='" + position + '\'' +
-                ", endWork=" + endWork +
-                ", jobCompany='" + jobCompany + '\'' +
-                ", skill='" + skill + '\'' +
-                '}';
+        return  " BeginWork = " + beginWork +
+                ", Position = '" + position + '\'' +
+                ", EndWork = " + endWork +
+                ", Company = '" + jobCompany + '\'' +
+                ", Skill = '" + skill + '\'';
     }
 
     public String getBeginWorkAsString() {
