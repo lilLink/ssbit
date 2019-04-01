@@ -27,7 +27,7 @@ public class ContactServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         Long id = Long.parseLong(req.getParameter("id"));
         Contact contact = contactService.getById(id);
         contact.setEmail(req.getParameter("email"));

@@ -33,7 +33,6 @@ import java.util.Random;
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class UploadServlet extends HttpServlet {
 
-    private static final String SAVE_DIRECTORY = "F:\\IDEA Projects\\ParserFourType\\src\\main\\resources";
     private static final String REDIRECT = "/";
     private CompanyParser companyParser = new CompanyParser();
     private PersonService personService = new PersonService();

@@ -28,7 +28,7 @@ public class JobServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         Long id = Long.parseLong(req.getParameter("id"));
         Job job = jobService.getById(id);
         job.setBeginWork(LocalDate.parse(req.getParameter("begin")));

@@ -1,7 +1,5 @@
 package com.lillink.parsefourtype.controller;
 
-import com.lillink.parsefourtype.dao.AddressDao;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +9,6 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/")
 public class MainServlet extends HttpServlet {
-private AddressDao baseDao = new AddressDao();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
