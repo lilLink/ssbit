@@ -24,13 +24,13 @@ public class PdfCompanyWriter {
 
         putInTable("Last name", person.getLastName());
 
-        putInTable("Contact", String.valueOf(contactService.getById(id)));
+        putInTable("Contact", String.valueOf(contactService.getByPersonId(id)));
 
         putInTable("Date of birth", String.valueOf(person.getBirthDate()));
 
-        putInTable("Address", String.valueOf(addressService.getById(id)));
+        putInTable("Address", String.valueOf(addressService.getByPersonId(id)));
 
-        putInTable("Jobs", String.valueOf(jobService.getById(id)));
+        putInTable("Jobs", String.valueOf(jobService.getByPersonId(id)));
 
         return writeToDocument();
     }

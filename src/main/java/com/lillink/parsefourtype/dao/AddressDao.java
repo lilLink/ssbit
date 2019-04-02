@@ -17,7 +17,8 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM address";
     public static final String UPDATE_ALL_QUERY = "UPDATE address SET country = ?, city = ?, street = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE person = ?;";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id = ?";
+    public static final String FIND_BY_PERSON_QUERY = "SELECT * FROM address WHERE person = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO address (country,city,street,person) VALUES (?,?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM address WHERE id = ?";
 
@@ -29,6 +30,28 @@ public class AddressDao extends DBConnection implements BaseDao<Address> {
         LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
+            statement.setLong(1, id);
+            ResultSet set = statement.executeQuery();
+            if (set.next()){
+                address = new Address();
+                address.setId(id);
+                address.setCountry(set.getString("country"));
+                address.setCity(set.getString("city"));
+                address.setStreet(set.getString("street"));
+                LOGGER.trace("Address {} found by id successfully", id);
+            }
+        }catch (SQLException e){
+            LOGGER.warn("Address {} wasn't found in database", id, e);
+        }
+        return address;
+    }
+
+    @Override
+    public Address findByPersonId(Long id){
+        Address address = null;
+        LOGGER.trace("Started finding by id {} in database", id);
+        try {
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_PERSON_QUERY);
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (set.next()){

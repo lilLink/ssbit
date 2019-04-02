@@ -29,7 +29,9 @@ public class PersonServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("add") != null) {
+        if (req.getParameter("updateId") != null){
+            this.handleUpdate(req,resp);
+        } else if (req.getParameter("add") != null) {
             req.getRequestDispatcher("/WEB-INF/views/person_add.jsp").forward(req, resp);
         } else {
             String addressesHtmlString = HtmlMappingUtil.mapPersonToTable(personService.getAll());
@@ -110,9 +112,26 @@ public class PersonServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
+        Long id = Long.parseLong(req.getParameter("id"));
+        Person person = personService.getById(id);
+        person.setFirstName(req.getParameter("first"));
+        person.setLastName(req.getParameter("last"));
+        person.setBirthDate(LocalDate.parse(req.getParameter("date")));
+        personService.save(person, id);
+    }
+
+    @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         personService.delete(Long.parseLong(req.getParameter("id")));
     }
 
+    private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("updateId"));
+        Person person = personService.getById(id);
+        String resultHtml = HtmlMappingUtil.mapPersonToUpdateForm(person);
+        req.setAttribute("person", resultHtml);
 
+        req.getRequestDispatcher("/WEB-INF/views/person_update.jsp").forward(req, resp);
+    }
 }

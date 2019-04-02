@@ -6,6 +6,8 @@ public interface BaseDao<T> {
 
     T findById(Long id);
 
+    T findByPersonId(Long id);
+
     List<T> findAll();
 
     Long save(T name, Long personId);

@@ -70,6 +70,7 @@ public class HtmlMappingUtil {
                 .append("<td>").append(person.getFirstName()).append("</td>")
                 .append("<td>").append(person.getLastName()).append("</td>")
                 .append("<td>").append(person.getBirthDate()).append("</td>")
+                .append("<td><button onClick = handleUpdate(").append(person.getId()).append(")>Update</button></td>")
                 .append("<td><a href = '").append("person_all?id=").append(person.getId()).append("'").append(" class = 'btn btn-success'> Get More Info </a></td>")
                 .append("<td><button onClick = handleDelete(").append(person.getId()).append(")>Delete</button></td>")
                 .append("</tr>");
@@ -107,6 +108,15 @@ public class HtmlMappingUtil {
                         .append(" Position: ").append(job.getPosition()).append(" New: <input id='position_").append(job.getId()).append("'>").append("<hr>")
                         .append(" End Work: ").append(job.getEndWork()).append(" New: <input type='date' id='end_").append(job.getId()).append("'>").append("<hr>")
                         .append(" <button onClick = handleUpdate(").append(job.getId()).append(")>Save</button>").append("<hr>");
+        return result.toString();
+    }
+
+    public static String mapPersonToUpdateForm(Person person){
+        StringBuilder result = new StringBuilder();
+                result.append("First Name: ").append(person.getFirstName()).append(" New : <input type='text' id='first_").append(person.getId()).append("'>").append("<hr>")
+                        .append(" Last Name: ").append(person.getLastName()).append(" New: <input type='text' id='last_").append(person.getId()).append("'>").append("<hr>")
+                        .append(" Birth Date: ").append(person.getBirthDate()).append(" New: <input type='date' id='date_").append(person.getId()).append("'>").append("<hr>")
+                        .append(" <button onClick = handleUpdate(").append(person.getId()).append(")>Save</button>").append("<hr>");
         return result.toString();
     }
 }

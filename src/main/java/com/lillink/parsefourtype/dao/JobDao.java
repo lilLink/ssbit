@@ -16,7 +16,8 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
     public static final String FIND_ALL_QUERY = "SELECT * FROM jobs";
     public static final String UPDATE_ALL_QUERY = "UPDATE jobs SET start_work = ?, job_company = ?, skill = ?, position = ?, end_work = ? WHERE id = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO jobs (start_work,job_company,skill,position,end_work,person) VALUES (?,?,?,?,?,?) RETURNING id";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE person = ?";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM jobs WHERE id = ?";
+    public static final String FIND_BY_PERSON_QUERY = "SELECT * FROM jobs WHERE person = ?";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM jobs WHERE id = ?";
 
     private static final Logger LOGGER = getLogger();
@@ -27,6 +28,30 @@ public class JobDao extends DBConnection implements BaseDao<Job>{
         LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
+            statement.setObject(1,id);
+            ResultSet set = statement.executeQuery();
+            if (set.next()){
+                job = new Job();
+                job.setId(id);
+                job.setBeginWork(LocalDate.parse(set.getDate("start_work").toString()));
+                job.setJobCompany(set.getString("job_company"));
+                job.setSkill(set.getString("skill"));
+                job.setPosition(set.getString("position"));
+                job.setEndWork(LocalDate.parse(set.getDate("end_work").toString()));
+            }
+            LOGGER.trace("Job {} found by id successfully ", id);
+        }catch (SQLException e){
+            LOGGER.warn("Job {} wasn't found in database ", id, e);
+        }
+        return job;
+    }
+
+    @Override
+    public Job findByPersonId(Long id) {
+        Job job = null;
+        LOGGER.trace("Started finding by id {} in database", id);
+        try {
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_PERSON_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
             if (set.next()){

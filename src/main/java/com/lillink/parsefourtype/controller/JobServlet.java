@@ -36,7 +36,7 @@ public class JobServlet extends HttpServlet {
         job.setSkill(req.getParameter("skill"));
         job.setPosition(req.getParameter("position"));
         job.setEndWork(LocalDate.parse(req.getParameter("end")));
-        jobService.save(job,null);
+        jobService.save(job,id);
     }
 
     @Override

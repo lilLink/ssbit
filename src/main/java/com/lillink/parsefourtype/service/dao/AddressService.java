@@ -19,6 +19,11 @@ public class AddressService implements Service<Address> {
     }
 
     @Override
+    public Address getByPersonId(Long id){
+        return addressDao.findByPersonId(id);
+    }
+
+    @Override
     public Address getById(Long id){
         return addressDao.findById(id);
     }

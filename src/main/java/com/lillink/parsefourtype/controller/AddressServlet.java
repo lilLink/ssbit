@@ -33,7 +33,7 @@ public class AddressServlet extends HttpServlet{
         address.setCountry(req.getParameter("country"));
         address.setCity(req.getParameter("city"));
         address.setStreet(req.getParameter("street"));
-        addressService.save(address, null);
+        addressService.save(address, id);
     }
 
     @Override

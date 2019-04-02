@@ -19,6 +19,11 @@ public class PersonService implements Service<Person> {
     }
 
     @Override
+    public Person getByPersonId(Long id){
+        return null;
+    }
+
+    @Override
     public Person getById(Long id){
         return personDao.findById(id);
     }

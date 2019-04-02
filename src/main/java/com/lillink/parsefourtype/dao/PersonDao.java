@@ -44,6 +44,11 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
     }
 
     @Override
+    public Person findByPersonId(Long id){
+        return null;
+    }
+
+    @Override
     public List<Person> findAll(){
         List<Person> resultList = new ArrayList<>();
         LOGGER.trace("Started finding all in database");

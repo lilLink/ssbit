@@ -35,5 +35,8 @@
         };
         xhr.send(null);
     }
+    function handleUpdate(clickedId) {
+        window.location.href = "http://localhost:8080/parser-resume/person?updateId="+clickedId;
+    }
 </script>
 </html>

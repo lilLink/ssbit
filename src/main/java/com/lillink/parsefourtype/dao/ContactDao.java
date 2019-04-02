@@ -17,7 +17,8 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
 
     public static final String FIND_ALL_QUERY = "SELECT * FROM contacts";
     public static final String UPDATE_ALL_QUERY = "UPDATE contacts SET email = ?, number = ? WHERE id = ?";
-    public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE person = ?";
+    public static final String FIND_BY_ID_QUERY = "SELECT * FROM contacts WHERE id = ?";
+    public static final String FIND_BY_PERSON_QUERY = "SELECT * FROM contacts WHERE person = ?";
     public static final String INSERT_ALL_QUERY = "INSERT INTO contacts (email,number,person) VALUES (?,?,?) RETURNING id";
     public static final String DELETE_BY_ID_QUERY = "DELETE FROM contacts WHERE id = ?";
 
@@ -29,6 +30,26 @@ public class ContactDao extends DBConnection implements BaseDao<Contact> {
         LOGGER.trace("Started finding by id {} in database", id);
         try {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
+            statement.setObject(1,id);
+            ResultSet set = statement.executeQuery();
+            if (set.next()){
+                contact = new Contact();
+                contact.setId(id);
+                contact.setEmail(set.getString("email"));
+                contact.setNumber(set.getString("number"));
+            }
+            LOGGER.trace("Contact {} found by id successfully", id);
+        }catch (SQLException e){
+            LOGGER.warn("Contact {} wasn't found in database", id);
+        }
+        return contact;
+    }
+
+    public Contact findByPersonId(Long id){
+        Contact contact = null;
+        LOGGER.trace("Started finding by id {} in database", id);
+        try {
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_PERSON_QUERY);
             statement.setObject(1,id);
             ResultSet set = statement.executeQuery();
             if (set.next()){

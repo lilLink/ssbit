@@ -8,6 +8,8 @@ public interface Service<T> {
 
     void delete(Long id);
 
+    T getByPersonId(Long id);
+
     T getById(Long id);
 
     Long save(T name,Long personId);

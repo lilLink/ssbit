@@ -19,6 +19,11 @@ public class ContactService implements Service<Contact> {
     }
 
     @Override
+    public Contact getByPersonId(Long id){
+        return contactDao.findByPersonId(id);
+    }
+
+    @Override
     public Contact getById(Long id){
         return contactDao.findById(id);
     }

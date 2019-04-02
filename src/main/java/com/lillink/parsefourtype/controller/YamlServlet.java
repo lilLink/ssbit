@@ -55,9 +55,9 @@ public class YamlServlet extends HttpServlet {
         Long id = Long.valueOf(req.getParameter("id"));
         req.setAttribute("person", personService.getById(id));
         person = personService.getById(id);
-        address = addressService.getById(id);
-        contact = contactService.getById(id);
-        job = jobService.getById(id);
+        address = addressService.getByPersonId(id);
+        contact = contactService.getByPersonId(id);
+        job = jobService.getByPersonId(id);
 
         jobs.add(job);
         person.setJob(jobs);

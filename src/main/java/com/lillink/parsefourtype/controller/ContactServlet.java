@@ -32,7 +32,7 @@ public class ContactServlet extends HttpServlet {
         Contact contact = contactService.getById(id);
         contact.setEmail(req.getParameter("email"));
         contact.setNumber(req.getParameter("number"));
-        contactService.save(contact,null);
+        contactService.save(contact,id);
     }
 
     @Override
