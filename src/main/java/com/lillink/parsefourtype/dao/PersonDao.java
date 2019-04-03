@@ -94,8 +94,9 @@ public class PersonDao extends DBConnection implements BaseDao<Person> {
 
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            if (person.getId() != 0)
-            savedId = resultSet.getLong("id");
+            if (person.getId() != 0) {
+                savedId = resultSet.getLong("id");
+            }
             LOGGER.trace("Person {} entered all in database", person);
         }catch (SQLException e){
             LOGGER.warn("Person {} wasn't entered in database", person, e);

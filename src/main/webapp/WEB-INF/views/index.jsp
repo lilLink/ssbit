@@ -8,10 +8,10 @@
 </head>
     <body>
         <div class="wrapper">
-            <li><a href="${pageContext.request.contextPath}/parser-resume/person">Persons</a></li>
-            <li><a href="${pageContext.request.contextPath}/parser-resume/address">Address</a></li>
-            <li><a href="${pageContext.request.contextPath}/parser-resume/contacts">Contacts</a></li>
-            <li><a href="${pageContext.request.contextPath}/parser-resume/job">Jobs</a></li>
+            <li><a href="${pageContext.request.contextPath}/person">Persons</a></li>
+            <li><a href="${pageContext.request.contextPath}/address">Address</a></li>
+            <li><a href="${pageContext.request.contextPath}/contacts">Contacts</a></li>
+            <li><a href="${pageContext.request.contextPath}/job">Jobs</a></li>
         </div>
 </body>
 </html>

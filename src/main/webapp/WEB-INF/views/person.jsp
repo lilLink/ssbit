@@ -19,8 +19,8 @@
 
     </table>
 </section>
-<li><a href="${pageContext.request.contextPath}/parser-resume/person?add=1">Add</a></li>
-<li><a href="${pageContext.request.contextPath}/parser-resume/">Back</a></li>
+<li><a href="${pageContext.request.contextPath}/person?add=1">Add</a></li>
+<li><a href="${pageContext.request.contextPath}/">Back</a></li>
 </body>
 
 <script type="text/javascript">
