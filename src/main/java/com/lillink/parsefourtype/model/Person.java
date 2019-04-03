@@ -23,25 +23,31 @@ public class Person {
 
     @XmlElement
     private Long id;
+
     @NotNull(message = "name must be not null")
     @NotBlank(message = "name can't be blank")
     @Pattern(regexp = "^[A-Z]?[a-z]*(?:-[A-Z][a-z]*)?$")
     @XmlElement
     private String firstName;
+
     @NotNull(message = "last name must be not null")
     @NotBlank(message = "last name can't be blank")
     @XmlElement
     private String lastName;
+
     @NotNull(message = "date of birth must be not null")
     @Past(message = "date of birth must be in past")
     @XmlElement
     @XmlJavaTypeAdapter(LocaleDateAdapter.class)
     private LocalDate birthDate;
+
     @XmlElement
     @XmlElementWrapper
     private List<Job> job = new ArrayList<>();
+
     @XmlElement
     private Address address;
+
     @XmlElement
     @XmlElementWrapper
     private List<Contact> contacts = new ArrayList<>();

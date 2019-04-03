@@ -19,10 +19,12 @@ public class Contact {
 
     @XmlElement
     private Long id;
+
     @NotNull(message = "email must be not null")
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+(com|net|ua|ru|org)$")
     @XmlElement
     private String email;
+
     @NotNull(message = "phone number must be not null")
     @NotBlank(message = "phone number must be not blank")
     @Pattern(regexp = "^\\+?\\d{12}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}")

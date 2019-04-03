@@ -7,8 +7,8 @@
 <body>
 <section>
     <h3>Person info</h3>
-    <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
+    <table class="table table-striped" border="1" cellpadding="10" cellspacing="0">
+        <thead class="thead-dark">
         <th class="col" style="width: 30%">First Name</th>
         <th class="col" style="width: 30%">Last Name</th>
         <th class="col" style="width: 25%">Birth Date</th>
@@ -19,8 +19,8 @@
 
     </table>
 </section>
-<li><a href="${pageContext.request.contextPath}/person?add=1">Add</a></li>
-<li><a href="${pageContext.request.contextPath}/">Back</a></li>
+<li><a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/person?add=1">Add</a></li>
+<li><a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/">Back</a></li>
 </body>
 
 <script type="text/javascript">
@@ -28,9 +28,11 @@
     {
         var url = "http://localhost:8080/parser-resume/person?id=" + clickedId;
         var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", url, true);
+        var del = confirm("Do you wanna delete?");
+        if (del == true){
+            xhr.open("DELETE", url, del);
+        }
         xhr.onload = function () {
-            alert('Person ' + clickedId + ' was successfully deleted');
             document.location.reload();
         };
         xhr.send(null);

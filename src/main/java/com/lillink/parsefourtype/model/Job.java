@@ -26,19 +26,23 @@ public class Job {
     @XmlElement
     @XmlJavaTypeAdapter(LocaleDateAdapter.class)
     private LocalDate beginWork;
+
     @NotNull(message = "position must be not null")
     @NotBlank(message = "position can't be blank")
     @XmlElement
     private String position;
+
     @NotNull(message = "end date of work must be not null")
     @PastOrPresent(message = "end date of work must be in past or present")
     @XmlElement
     @XmlJavaTypeAdapter(LocaleDateAdapter.class)
     private LocalDate endWork;
+
     @NotNull(message = "company name must be not null")
     @NotBlank(message = "company name can't be blank")
     @XmlElement
     private String jobCompany;
+
     @NotNull(message = "skill must be not null")
     @NotBlank(message = "skill can't be blank")
     @XmlElement

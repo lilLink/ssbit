@@ -15,7 +15,6 @@
         var xhr = new XMLHttpRequest();
         xhr.open("PUT", url.toString(), true);
         xhr.onload = function () {
-            alert('Contact ' + clickedId + ' was successfully updated');
             document.location.assign(document.referrer);
         };
         xhr.send(null);

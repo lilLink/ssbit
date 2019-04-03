@@ -14,6 +14,7 @@ public class Company {
 
     @XmlElement
     private String nameCompany;
+
     @XmlElement
     @XmlElementWrapper
     private List<Person> personList;

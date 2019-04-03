@@ -7,11 +7,11 @@
     <title>Hello</title>
 </head>
     <body>
-        <div class="wrapper">
-            <li><a href="${pageContext.request.contextPath}/person">Persons</a></li>
-            <li><a href="${pageContext.request.contextPath}/address">Address</a></li>
-            <li><a href="${pageContext.request.contextPath}/contacts">Contacts</a></li>
-            <li><a href="${pageContext.request.contextPath}/job">Jobs</a></li>
+        <div class="align-middle">
+            <a href="${pageContext.request.contextPath}/person" class="badge badge-success" role="button">Persons</a>
+            <a href="${pageContext.request.contextPath}/address" class="badge badge-success" role="button">Address</a>
+            <a href="${pageContext.request.contextPath}/contacts" class="badge badge-success" role="button">Contacts</a>
+            <a href="${pageContext.request.contextPath}/job" class="badge badge-success" role="button">Jobs</a>
         </div>
 </body>
 </html>

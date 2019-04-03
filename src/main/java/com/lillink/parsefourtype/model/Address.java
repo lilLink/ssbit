@@ -18,14 +18,17 @@ public class Address {
 
     @XmlElement
     private Long id;
+
     @NotNull(message = "country must be not null")
     @NotBlank(message = "country can't be blank")
     @XmlElement
     private String country;
+
     @NotNull(message = "city must be not null")
     @NotBlank(message = "city can't be blank")
     @XmlElement
     private String city;
+
     @NotNull(message = "street must be not null")
     @NotBlank(message = "street can't be blank")
     @XmlElement

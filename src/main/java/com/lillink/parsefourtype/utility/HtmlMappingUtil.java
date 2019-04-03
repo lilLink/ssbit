@@ -71,7 +71,7 @@ public class HtmlMappingUtil {
                 .append("<td>").append(person.getLastName()).append("</td>")
                 .append("<td>").append(person.getBirthDate()).append("</td>")
                 .append("<td><button onClick = handleUpdate(").append(person.getId()).append(")>Update</button></td>")
-                .append("<td><a href = '").append("person_all?id=").append(person.getId()).append("'").append(" class = 'btn btn-success'> Get More Info </a></td>")
+                .append("<td><a href = '").append("person_all?id=").append(person.getId()).append("'").append(" class = 'btn btn-success'> Info </a></td>")
                 .append("<td><button onClick = handleDelete(").append(person.getId()).append(")>Delete</button></td>")
                 .append("</tr>");
         return result.toString();
@@ -85,37 +85,37 @@ public class HtmlMappingUtil {
 
     public static String mapContactToUpdateForm(Contact contact) {
         StringBuilder result = new StringBuilder();
-                result.append(" Email: ").append(contact.getEmail()).append(" New:  <input id='email_").append(contact.getId()).append("'>").append("<hr>")
-                .append(" Number: ").append(contact.getNumber()).append(" New: <input id='number_").append(contact.getId()).append("'>").append("<hr>")
+                result.append(" Email: ").append(contact.getEmail()).append(" New:  <input id='email_").append(contact.getId()).append("' value='").append(contact.getEmail()).append("'>").append("<hr>")
+                .append(" Number: ").append(contact.getNumber()).append(" New: <input id='number_").append(contact.getId()).append("' value='").append(contact.getNumber()).append("'>").append("<hr>")
                 .append(" <button onClick = handleUpdate(").append(contact.getId()).append(")>Save</button>").append("<hr>");
         return result.toString();
     }
 
     public static String mapAddressToUpdateForm(Address address){
         StringBuilder result = new StringBuilder();
-                result.append(" Country: ").append(address.getCountry()).append(" New:  <input id='country_").append(address.getId()).append("'>").append("<hr>")
-                        .append(" City: ").append(address.getCity()).append(" New: <input id='city_").append(address.getId()).append("'>").append("<hr>")
-                        .append(" Street: ").append(address.getStreet()).append(" New: <input id='street_").append(address.getId()).append("'>").append("<hr>")
+                result.append(" Country: ").append(address.getCountry()).append(" New:  <input id='country_").append(address.getId()).append("' value='").append(address.getCountry()).append("'>").append("<hr>")
+                        .append(" City: ").append(address.getCity()).append(" New: <input id='city_").append(address.getId()).append("' value='").append(address.getCity()).append("'>").append("<hr>")
+                        .append(" Street: ").append(address.getStreet()).append(" New: <input id='street_").append(address.getId()).append("' value='").append(address.getStreet()).append("'>").append("<hr>")
                         .append(" <button onClick = handleUpdate(").append(address.getId()).append(")>Save</button>").append("<hr>");
         return result.toString();
     }
 
     public static String mapJobToUpdateForm(Job job){
         StringBuilder result = new StringBuilder();
-                result.append(" Begin Work: ").append(job.getBeginWork()).append(" New: <input type='date' id='begin_").append(job.getId()).append("'>").append("<hr>")
-                        .append(" Company Name: ").append(job.getJobCompany()).append(" New: <input id='company_").append(job.getId()).append("'>").append("<hr>")
-                        .append(" Skill: ").append(job.getSkill()).append(" New: <input id='skill_").append(job.getId()).append("'>").append("<hr>")
-                        .append(" Position: ").append(job.getPosition()).append(" New: <input id='position_").append(job.getId()).append("'>").append("<hr>")
-                        .append(" End Work: ").append(job.getEndWork()).append(" New: <input type='date' id='end_").append(job.getId()).append("'>").append("<hr>")
+                result.append(" Begin Work: ").append(job.getBeginWork()).append(" New: <input type='date' id='begin_").append(job.getId()).append("' value='").append(job.getBeginWork()).append("'>").append("<hr>")
+                        .append(" Company Name: ").append(job.getJobCompany()).append(" New: <input id='company_").append(job.getId()).append("' value='").append(job.getJobCompany()).append("'>").append("<hr>")
+                        .append(" Skill: ").append(job.getSkill()).append(" New: <input id='skill_").append(job.getId()).append("' value='").append(job.getSkill()).append("'>").append("<hr>")
+                        .append(" Position: ").append(job.getPosition()).append(" New: <input id='position_").append(job.getId()).append("' value='").append(job.getPosition()).append("'>").append("<hr>")
+                        .append(" End Work: ").append(job.getEndWork()).append(" New: <input type='date' id='end_").append(job.getId()).append("' value='").append(job.getEndWork()).append("'>").append("<hr>")
                         .append(" <button onClick = handleUpdate(").append(job.getId()).append(")>Save</button>").append("<hr>");
         return result.toString();
     }
 
     public static String mapPersonToUpdateForm(Person person){
         StringBuilder result = new StringBuilder();
-                result.append("First Name: ").append(person.getFirstName()).append(" New : <input type='text' id='first_").append(person.getId()).append("'>").append("<hr>")
-                        .append(" Last Name: ").append(person.getLastName()).append(" New: <input type='text' id='last_").append(person.getId()).append("'>").append("<hr>")
-                        .append(" Birth Date: ").append(person.getBirthDate()).append(" New: <input type='date' id='date_").append(person.getId()).append("'>").append("<hr>")
+                result.append("First Name: ").append(person.getFirstName()).append(" New : <input type='text' id='first_").append(person.getId()).append("' value='").append(person.getFirstName()).append("'>").append("<hr>")
+                        .append(" Last Name: ").append(person.getLastName()).append(" New: <input type='text' id='last_").append(person.getId()).append("' value='").append(person.getLastName()).append("'>").append("<hr>")
+                        .append(" Birth Date: ").append(person.getBirthDate()).append(" New: <input type='date' id='date_").append(person.getId()).append("' value='").append(person.getBirthDate()).append("'>").append("<hr>")
                         .append(" <button onClick = handleUpdate(").append(person.getId()).append(")>Save</button>").append("<hr>");
         return result.toString();
     }

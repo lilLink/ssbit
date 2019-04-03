@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public abstract class DBConnection {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/parse";
+    private static final String URL = "jdbc:postgresql://localhost:5433/parse";
     private static final String USER = "postgres";
     private static final String PASSWORD = "root";
 

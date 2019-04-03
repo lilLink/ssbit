@@ -108,7 +108,7 @@ public class PersonServlet extends HttpServlet {
         req.setAttribute("address", person.getAddress());
         req.setAttribute("job", person.getJob());
 
-        req.getRequestDispatcher("/WEB-INF/views/person_add.jsp").forward(req, resp);
+        resp.sendRedirect("/parser-resume/person");
     }
 
     @Override
